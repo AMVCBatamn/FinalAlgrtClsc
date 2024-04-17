@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -154,7 +155,7 @@ public class DibujarGrafo extends JPanel {
         grafo.insertarArista(arista2);
         grafo.insertarArista(arista3);
         
-        DibujarGrafo dibujo = new DibujarGrafo(null);
+        DibujarGrafo dibujo = new DibujarGrafo(grafo);
         frame.getContentPane().add(dibujo); 
 
         frame.setVisible(true);
