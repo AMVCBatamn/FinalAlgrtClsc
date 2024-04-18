@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame {
-//
+
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private Grafo grafo; // Referencia al grafo principal
@@ -82,7 +82,7 @@ public class Menu extends JFrame {
         menuBar.setToolTipText("");
         setJMenuBar(menuBar);
 
-        JMenu mnNewMenu = new JMenu("Gestion de Ubicaciones");
+        JMenu mnNewMenu = new JMenu("Gestión de Ubicaciones");
         menuBar.add(mnNewMenu);
 
         JMenuItem mntmNewMenuItem = new JMenuItem("Agregar Ubicacion");
@@ -110,6 +110,22 @@ public class Menu extends JFrame {
 
         JMenuItem mntmNewMenuItem_2 = new JMenuItem("Modificar Ubicacion");
         mnNewMenu.add(mntmNewMenuItem_2);
+        
+        JMenu mnNewMenu_3 = new JMenu("Gestión de Conexiones");
+        menuBar.add(mnNewMenu_3);
+        
+        JMenuItem mntmNewMenuItem_9 = new JMenuItem("Agregar Conexión");
+        mntmNewMenuItem_9.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	//	AgregarConexion conexion = new AgregarConexion();
+        		//conexion.setModal(true);
+        		//conexion.setVisible(true);
+        	}
+        });
+        mnNewMenu_3.add(mntmNewMenuItem_9);
+        
+        JMenuItem mntmNewMenuItem_10 = new JMenuItem("Listar Conexiones");
+        mnNewMenu_3.add(mntmNewMenuItem_10);
 
         JMenu mnNewMenu_1 = new JMenu("Calculo de ruta");
         menuBar.add(mnNewMenu_1);
