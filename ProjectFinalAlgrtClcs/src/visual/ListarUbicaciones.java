@@ -1,24 +1,13 @@
+// ListarUbicaciones.java
 package visual;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
 import logico.Grafo;
 import logico.Nodo;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class ListarUbicaciones extends JDialog {
 
@@ -26,8 +15,9 @@ public class ListarUbicaciones extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel model;
-    private Object[] row;
-    private Grafo grafo; // Referencia al grafo donde se encuentran los nodos
+    private Grafo grafo; // referencia al grafo donde se encuentran los nodos/
+    private JButton btnEliminar;
+    private JButton btnModificar;
 
     /**
      * Create the dialog.
@@ -39,64 +29,103 @@ public class ListarUbicaciones extends JDialog {
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
-        
+
         model = new DefaultTableModel();
-        String[] header = {"Codigo", "Valor", "Ubicacion", "Longitud", "Latitud"}; 
+        String[] header = {"Codigo", "Valor", "Ubicacion", "Longitud", "Latitud"};
         model.setColumnIdentifiers(header);
-        
+
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
-        
-        
+
         JPanel buttonPane = new JPanel();
-        buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        buttonPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
         
-        JButton btnActualizar = new JButton("Actualizar (ver nuevos)");
-        btnActualizar.addActionListener(e -> actualizarTabla());
-        buttonPane.add(btnActualizar);
-        
+        btnModificar = new JButton("Modificar");
+        buttonPane.add(btnModificar);
+
+        btnEliminar = new JButton("Eliminar");
+        buttonPane.add(btnEliminar);
+
         JButton cancelButton = new JButton("Cancelar");
-        cancelButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		dispose();
-        	}
-        });
-        cancelButton.setActionCommand("Cancel");
+        cancelButton.addActionListener(e -> dispose());
         buttonPane.add(cancelButton);
+
+        btnEliminar.addActionListener(e -> {
+            int filaSeleccionada = table.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este nodo?", "Eliminar Nodo", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    int codigoNodo = (int) table.getValueAt(filaSeleccionada, 0);
+                    Nodo nodoEliminar = null;
+                    for (Nodo nodo : grafo.getMisNodos()) {
+                        if (nodo.getCodigo() == codigoNodo) {
+                            nodoEliminar = nodo;
+                            break;
+                        }
+                    }
+                    if (nodoEliminar != null) {
+                        grafo.eliminarNodo(nodoEliminar);
+                        actualizarTabla();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un nodo para eliminar.", "Eliminar Nodo", JOptionPane.WARNING_MESSAGE);
+            }
+        });
         
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        btnModificar.addActionListener(e -> {
+            int filaSeleccionada = table.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                int codigoNodo = (int) table.getValueAt(filaSeleccionada, 0);
+                Nodo nodoModificar = null;
+                for (Nodo nodo : grafo.getMisNodos()) {
+                    if (nodo.getCodigo() == codigoNodo) {
+                        nodoModificar = nodo;
+                        break;
+                    }
+                }
+                if (nodoModificar != null) {
+                    ModificarNodo modificarNodo = new ModificarNodo();
+                    modificarNodo.setGrafo(grafo);
+                    modificarNodo.setNodo(nodoModificar);
+                    modificarNodo.setModal(true); 
+                    modificarNodo.setVisible(true);
+                    actualizarTabla();
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un nodo para modificar.", "Modificar Nodo", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+        setLocationRelativeTo(null);
         setResizable(false);
     }
 
     public void setGrafo(Grafo grafo) {
         this.grafo = grafo;
+        actualizarTabla();
     }
 
     private void actualizarTabla() {
-        model.setRowCount(0);
+        if (grafo != null && model != null) {
+            model.setRowCount(0);
 
-        ArrayList<Nodo> nodos = grafo.getMisNodos();
+            ArrayList<Nodo> nodos = grafo.getMisNodos();
 
-       
-        for (Nodo nodo : nodos) {
-            row = new Object[5];
-            row[0] = nodo.getCodigo();
-            row[1] = nodo.getValor();
-            row[2] = nodo.getNombreUbicacion();
-            row[3] = nodo.getLonguitud();
-            row[4] = nodo.getLatitud();
-            
-            model.addRow(row);
-        }
-
-        
-        for (Nodo nodo : nodos) {
-            System.out.println(nodo);
+            for (Nodo nodo : nodos) {
+                Object[] rowData = {
+                        nodo.getCodigo(),
+                        nodo.getValor(),
+                        nodo.getNombreUbicacion(),
+                        nodo.getLonguitud(),
+                        nodo.getLatitud()
+                };
+                model.addRow(rowData);
+            }
         }
     }
 }

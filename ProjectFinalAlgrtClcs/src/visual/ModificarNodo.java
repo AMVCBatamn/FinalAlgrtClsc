@@ -25,7 +25,7 @@ import javax.swing.JOptionPane; // Importar JOptionPane
 import logico.Grafo;
 import logico.Nodo;
 
-public class AgregarUbicacion extends JDialog {
+public class ModificarNodo extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
@@ -35,13 +35,14 @@ public class AgregarUbicacion extends JDialog {
     private JSpinner spnLongitud;
     private Grafo grafo;
     private JTextField txtcodigo;
+    private Nodo nodo; // Agregar variable para el nodo seleccionado
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
         try {
-            AgregarUbicacion dialog = new AgregarUbicacion();
+            ModificarNodo dialog = new ModificarNodo();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -52,8 +53,8 @@ public class AgregarUbicacion extends JDialog {
     /**
      * Create the dialog.
      */
-    public AgregarUbicacion() {
-    	setTitle("Agregar Ubicación");
+    public ModificarNodo() {
+    	setTitle("Modificar Ubicación");
         setBounds(100, 100, 293, 398);
         setLocationRelativeTo(null); 
         getContentPane().setLayout(new BorderLayout());
@@ -121,7 +122,7 @@ public class AgregarUbicacion extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-            	JButton okButton = new JButton("Agregar");
+            	JButton okButton = new JButton("Modificar");
             	okButton.addActionListener(new ActionListener() {
             	    public void actionPerformed(ActionEvent e) {
             	       
@@ -129,20 +130,17 @@ public class AgregarUbicacion extends JDialog {
             	        String nombre = txtNombre.getText();
             	        double longitud = (double) spnLongitud.getValue();
             	        double latitud = (double) spnLatitud.getValue();
-            	        Nodo nuevoNodo = new Nodo(valor, nombre, longitud, latitud);
+            	        nodo.setValor(valor);
+            	        nodo.setNombreUbicacion(nombre);
+            	        nodo.setLonguitud(longitud);
+            	        nodo.setLatitud(latitud);
             	        
-            	        txtcodigo.setText("Ubic-" + Nodo.getCodigoNodo());
-            	        spnValor.setValue(0);
-            	        txtNombre.setText("");
-            	        spnLongitud.setValue(0.0);
-            	        spnLatitud.setValue(0.0);
-            	        //
-            	        Grafo.getInstance().insertarNodo(nuevoNodo);
-            	        JOptionPane.showMessageDialog(null, "Ubicación agregada correctamente.");
+            	        Grafo.getInstance().actualizarNodo(nodo, nombre, longitud, latitud);
+            	        JOptionPane.showMessageDialog(null, "Ubicación modificada correctamente.");
+            	        dispose();
             	    }
             	});
 
-            	dispose();
                 okButton.setActionCommand("OK");
                 buttonPane.add(okButton);
                 getRootPane().setDefaultButton(okButton);
@@ -167,5 +165,19 @@ public class AgregarUbicacion extends JDialog {
     public void setGrafo(Grafo grafo) {
         this.grafo = grafo;
     }
+    
+    public void setNodo(Nodo nodo) {
+        this.nodo = nodo;
+        cargarDatosNodo();
+    }
+    
+    private void cargarDatosNodo() {
+        if (nodo != null) {
+            txtcodigo.setText("Ubic-" + nodo.getCodigo());
+            spnValor.setValue(nodo.getValor());
+            txtNombre.setText(nodo.getNombreUbicacion());
+            spnLongitud.setValue(nodo.getLonguitud());
+            spnLatitud.setValue(nodo.getLatitud());
+        }
+    }
 }
-
