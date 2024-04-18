@@ -11,7 +11,9 @@ import java.awt.Dimension;
 
 import javax.swing.border.TitledBorder;
 
+import logico.Arista;
 import logico.Grafo;
+import logico.Nodo;
 
 import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
@@ -41,15 +43,36 @@ public class Menu extends JFrame {
                 }
             }
         });
-    }//
+    }
 
     /**
      * Create the frame.
      */
     public Menu() {
-        
-        grafo = new Grafo();
-
+    	
+    	Grafo grafo = new Grafo();
+    	
+		Nodo A = new Nodo(10, "Moca", 10.5, 20.3);
+		Nodo B = new Nodo(23, "La Vega", 15.2, 25.7);
+		Nodo C = new Nodo(13, "Santiago", 20.8, 30.1);
+		
+		grafo.insertarNodo(A);
+		grafo.insertarNodo(B);
+		grafo.insertarNodo(C);
+		
+		Arista arista1 = new Arista(A, B, 5);
+		Arista arista2 = new Arista(B, C, 8);
+		Arista arista3 = new Arista(A, C, 1);
+		
+		///PROBANDO LOS METODOS:
+		
+		grafo.insertarArista(arista1);
+		grafo.insertarArista(arista2);
+		grafo.insertarArista(arista3);
+    	
+    	Grafo.getInstance().setMisAristas(grafo.getMisAristas());
+    	Grafo.getInstance().setMisNodos(grafo.getMisNodos());
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 328);
 

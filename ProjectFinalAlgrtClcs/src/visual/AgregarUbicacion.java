@@ -33,10 +33,8 @@ public class AgregarUbicacion extends JDialog {
     private JTextField txtNombre;
     private JSpinner spnValor;
     private JSpinner spnLongitud;
-
-    // Referencia al grafo donde se agregarán los nodos
     private Grafo grafo;
-    private JTextField txtcodigo;//
+    private JTextField txtcodigo;
 
     /**
      * Launch the application.
@@ -45,11 +43,6 @@ public class AgregarUbicacion extends JDialog {
         try {
             AgregarUbicacion dialog = new AgregarUbicacion();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            
-            // Crear una instancia de Grafo y establecerla en el diálogo
-            Grafo grafo = new Grafo();
-            dialog.setGrafo(grafo);
-            
             dialog.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,22 +124,20 @@ public class AgregarUbicacion extends JDialog {
             	JButton okButton = new JButton("Agregar");
             	okButton.addActionListener(new ActionListener() {
             	    public void actionPerformed(ActionEvent e) {
-            	        int valor = (int) spnValor.getValue();
+            	       
+            	    	int valor = (int) spnValor.getValue();
             	        String nombre = txtNombre.getText();
             	        double longitud = (double) spnLongitud.getValue();
             	        double latitud = (double) spnLatitud.getValue();
             	        Nodo nuevoNodo = new Nodo(valor, nombre, longitud, latitud);
             	        
-            	        grafo.insertarNodo(nuevoNodo);
-            	        
             	        txtcodigo.setText("Ubic-" + Nodo.getCodigoNodo());
-   
             	        spnValor.setValue(0);
             	        txtNombre.setText("");
             	        spnLongitud.setValue(0.0);
             	        spnLatitud.setValue(0.0);
             	        
-            	        // Mostrar mensaje de confirmación
+            	        Grafo.getInstance().insertarNodo(nuevoNodo);
             	        JOptionPane.showMessageDialog(null, "Ubicación agregada correctamente.");
             	    }
             	});

@@ -15,7 +15,7 @@ public class Arista {
 		this.ubicacionDestino = ubicacionDestino;
 		this.peso = peso;
 	}
-	//
+	
 	public int getCodigo() {
 		return codigo;
 	}

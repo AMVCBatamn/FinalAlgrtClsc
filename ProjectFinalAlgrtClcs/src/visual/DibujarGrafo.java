@@ -26,7 +26,7 @@ public class DibujarGrafo extends JPanel {
 	private Nodo selected;
 	private Point mouseCursor;
 	private static int escala = 10;
-	private static int mid = 10;//
+	private static int mid = 10;
 	
 	public DibujarGrafo(Grafo grafo) {
 		

@@ -8,11 +8,19 @@ public class Grafo {
 	
 	private ArrayList<Nodo> misNodos;
 	private ArrayList<Arista> misAristas;
+	private static Grafo grafo = null;
 	
 	public Grafo() {
 		super();
 		this.misNodos = new ArrayList<Nodo>();
 		this.misAristas = new ArrayList<Arista>();
+	}
+	
+	public static Grafo getInstance() {
+		if (grafo == null) {
+			grafo = new Grafo();
+		}
+		return grafo;
 	}
 	
 	public ArrayList<Nodo> getMisNodos() {
@@ -419,5 +427,5 @@ public class Grafo {
 	    }
 	}
 
-	//
+	
 }
