@@ -20,7 +20,7 @@ import logico.Nodo;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ListarNodo extends JDialog {
+public class ListarUbicaciones extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
@@ -32,8 +32,8 @@ public class ListarNodo extends JDialog {
     /**
      * Create the dialog.
      */
-    public ListarNodo() {
-        setTitle("Lista de Nodos");
+    public ListarUbicaciones() {
+        setTitle("Lista de Ubicaciones");
         setBounds(100, 100, 575, 488);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

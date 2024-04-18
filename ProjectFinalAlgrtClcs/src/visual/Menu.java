@@ -63,7 +63,7 @@ public class Menu extends JFrame {
         JMenuItem mntmNewMenuItem = new JMenuItem("Agregar Ubicacion");
         mntmNewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AgregarUbcNodo agregarnodo = new AgregarUbcNodo();
+                AgregarUbicacion agregarnodo = new AgregarUbicacion();
                 agregarnodo.setGrafo(grafo); 
                 agregarnodo.setModal(true);
                 agregarnodo.setVisible(true);
@@ -75,7 +75,7 @@ public class Menu extends JFrame {
         JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listar Ubicacion");
         mntmNewMenuItem_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ListarNodo listnodo = new ListarNodo();
+                ListarUbicaciones listnodo = new ListarUbicaciones();
                 listnodo.setGrafo(grafo); 
                 listnodo.setModal(true);
                 listnodo.setVisible(true);
