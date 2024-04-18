@@ -35,8 +35,8 @@ public class AgregarConexion extends JDialog {
 	private JSpinner spnPeso;
 	private JList listConocidas;
 	private JList listDesconocidas;
-	private DefaultListModel<String> defalultConocidos;
-	private DefaultListModel<String> defalultDesconocidos;
+	private DefaultListModel<String> defaultConocidos;
+	private DefaultListModel<String> defaultDesconocidos;
 
 	/**
 	 * Launch the application.
@@ -107,13 +107,13 @@ public class AgregarConexion extends JDialog {
 			JScrollPane scrollPane = new JScrollPane();
 			panel_2.add(scrollPane, BorderLayout.CENTER);
 			
-			defalultConocidos = new DefaultListModel<String>();
-			defalultDesconocidos = new DefaultListModel<String>();
+			defaultConocidos = new DefaultListModel<String>();
+			defaultDesconocidos = new DefaultListModel<String>();
 			
 			listConocidas = new JList();
 			listConocidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane.setViewportView(listConocidas);
-			listConocidas.setModel(defalultConocidos);
+			listConocidas.setModel(defaultConocidos);
 			
 			JPanel panel_3 = new JPanel();
 			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -127,7 +127,7 @@ public class AgregarConexion extends JDialog {
 			listDesconocidas = new JList();
 			listDesconocidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane_1.setViewportView(listDesconocidas);
-			listDesconocidas.setModel(defalultDesconocidos);
+			listDesconocidas.setModel(defaultDesconocidos);
 			
 			JButton btnDerecha = new JButton(">>");
 			btnDerecha.setEnabled(false);
@@ -184,11 +184,11 @@ public class AgregarConexion extends JDialog {
 		            
 		        	if(arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen.getNombreUbicacion())) {
 		        
-		        		defalultConocidos.addElement(arista.getUbicacionDestino().getNombreUbicacion());
+		        		defaultConocidos.addElement(arista.getUbicacionDestino().getNombreUbicacion());
 		            	
 		            }else if(arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen.getNombreUbicacion())) {
 		            	
-		            	defalultConocidos.addElement(arista.getUbicacionOrigen().getNombreUbicacion());
+		            	defaultConocidos.addElement(arista.getUbicacionOrigen().getNombreUbicacion());
 		            }
 		        }
 		    }   
@@ -199,13 +199,35 @@ public class AgregarConexion extends JDialog {
 		
 		if (cbxOrigen.getSelectedIndex() == -1) {
 			
+			clean();
 			
 		} else {
 			
 			Nodo origen = Grafo.getInstance().buscarNodoByNombre((String)cbxOrigen.getSelectedItem());
+			if(origen != null) {
+				
+				for (Nodo nodo : Grafo.getInstance().getMisNodos()) {
+					
+					if(!esConocido(nodo.getNombreUbicacion())) {
+						defaultDesconocidos.addElement(nodo.getNombreUbicacion());
+					}
+				}
+			}
+		} 
+	}
+
+	private boolean esConocido(String nombreUbicacion) {
+		
+		boolean conocido = false;
+		
+		for (int i = 0; i < defaultConocidos.size(); i++) {
 			
+			if(defaultConocidos.getElementAt(i).equalsIgnoreCase(nombreUbicacion)) {
+				conocido = true;
+			}
 		}
 		
+		return conocido;
 	}
 
 	private void loadUbicaciones() {
@@ -222,8 +244,8 @@ public class AgregarConexion extends JDialog {
 	}
 	
 	private void clean() {
-		defalultConocidos.removeAllElements();
-		defalultDesconocidos.removeAllElements();
+		defaultConocidos.removeAllElements();
+		defaultDesconocidos.removeAllElements();
 		
 	}
 }
