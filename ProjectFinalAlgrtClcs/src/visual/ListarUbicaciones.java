@@ -92,11 +92,11 @@ public class ListarUbicaciones extends JDialog {
             row[4] = nodo.getLatitud();
             
             model.addRow(row);
-        }
+        }//
 
         
         for (Nodo nodo : nodos) {
             System.out.println(nodo);
         }
     }
-}
+}//

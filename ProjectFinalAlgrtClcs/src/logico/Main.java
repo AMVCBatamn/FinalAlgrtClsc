@@ -14,7 +14,7 @@ public class Main {
 		Nodo C = new Nodo(13, "Santiago", 20.8, 30.1);
 		
 		grafo.insertarNodo(A);
-		grafo.insertarNodo(B);
+		grafo.insertarNodo(B);//
 		grafo.insertarNodo(C);
 		
 		Arista arista1 = new Arista(A, B, 5);

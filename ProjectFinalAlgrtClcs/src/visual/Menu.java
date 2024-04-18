@@ -41,7 +41,7 @@ public class Menu extends JFrame {
                 }
             }
         });
-    }
+    }//
 
     /**
      * Create the frame.

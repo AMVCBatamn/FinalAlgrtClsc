@@ -27,7 +27,7 @@ public class CalculoDijkstra extends JDialog {
 	private JRadioButton rdbtnEspcf;
 	private JPanel panelSeleccion;
 	private JComboBox cbxDestino;
-	private JComboBox cbxtOrigen;
+	private JComboBox cbxtOrigen;//
 
 	/**
 	 * Launch the application.

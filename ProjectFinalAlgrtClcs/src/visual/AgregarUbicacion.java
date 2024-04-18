@@ -36,7 +36,7 @@ public class AgregarUbicacion extends JDialog {
 
     // Referencia al grafo donde se agregarán los nodos
     private Grafo grafo;
-    private JTextField txtcodigo;
+    private JTextField txtcodigo;//
 
     /**
      * Launch the application.
