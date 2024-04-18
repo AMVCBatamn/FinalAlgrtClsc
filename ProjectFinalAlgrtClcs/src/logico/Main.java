@@ -19,18 +19,18 @@ public class Main {
 		
 		Arista arista1 = new Arista(A, B, 5);
 		Arista arista2 = new Arista(B, C, 8);
-		Arista arista3 = new Arista(A, C, 1);
+		//Arista arista3 = new Arista(A, C, 1);
 		
 		///PROBANDO LOS METODOS:
 		
 		grafo.insertarArista(arista1);
 		grafo.insertarArista(arista2);
-		grafo.insertarArista(arista3);
+		//grafo.insertarArista(arista3);
 		
 		
 		// Calcular y mostrar resultados de Dijkstra
-	    int[] dist = grafo.calcularDijkstra(grafo.generarMatrizAdyacencia(), grafo.buscarIndexByNombre("Moca"));
-	    grafo.imprimirResultadosDijkstra(dist, "Moca");
+	    int[] dist = grafo.calcularDijkstra(grafo.generarMatrizAdyacencia(), grafo.buscarIndexByNombre("Santiago"));
+	    grafo.imprimirResultadosDijkstra(dist, "Santiago");
 
 	    // Calcular y mostrar resultados de Kruskal
 	    ArrayList<Arista> aristasKruskal = grafo.calcularKruskal();

@@ -117,9 +117,9 @@ public class Menu extends JFrame {
         JMenuItem mntmNewMenuItem_9 = new JMenuItem("Agregar Conexión");
         mntmNewMenuItem_9.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        	//	AgregarConexion conexion = new AgregarConexion();
-        		//conexion.setModal(true);
-        		//conexion.setVisible(true);
+        		AgregarConexion conexion = new AgregarConexion();
+        		conexion.setModal(true);
+        		conexion.setVisible(true);
         	}
         });
         mnNewMenu_3.add(mntmNewMenuItem_9);

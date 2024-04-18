@@ -6,17 +6,13 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import logico.Grafo;
 import logico.Nodo;
 
-import javax.swing.border.EtchedBorder;
-import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
@@ -26,7 +22,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
-import java.awt.ScrollPane;
 
 public class CalculoDijkstra extends JDialog {
 
@@ -195,9 +190,6 @@ public class CalculoDijkstra extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		
-		
-
 		cargarDatos();
 	}
 
