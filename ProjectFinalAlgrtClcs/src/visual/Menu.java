@@ -20,6 +20,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -116,10 +118,14 @@ public class Menu extends JFrame {
         mntmNewMenuItem_3.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
-        		CalculoDijkstra calcudik = new CalculoDijkstra();
-        		calcudik.setModal(true);
-        		calcudik.setVisible(true);
+        		if (Grafo.getInstance() == null || Grafo.getInstance().getMisNodos().size() == 0 || Grafo.getInstance().getMisAristas().size() == 0) { 
+        			JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE); 
+        		} else {
+            		CalculoDijkstra calcudik = new CalculoDijkstra();
+            		calcudik.setModal(true);
+            		calcudik.setVisible(true);	
         		}
+        	}
         });
         mnNewMenu_1.add(mntmNewMenuItem_3);
 

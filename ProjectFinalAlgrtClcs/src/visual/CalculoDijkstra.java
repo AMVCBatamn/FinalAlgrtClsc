@@ -15,6 +15,7 @@ import logico.Nodo;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
+import java.awt.ScrollPane;
 
 public class CalculoDijkstra extends JDialog {
 
@@ -36,6 +39,7 @@ public class CalculoDijkstra extends JDialog {
 	private JComboBox cbxOrigen;
 	private Grafo grafo;
 	private JTextArea textArea;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -54,15 +58,6 @@ public class CalculoDijkstra extends JDialog {
 	 * Create the dialog.
 	 */
 	public CalculoDijkstra() {
-		
-		grafo = Grafo.getInstance();
-		
-		if (grafo == null || grafo.getMisNodos().size() == 0 || grafo.getMisAristas().size() == 0  ) {
-    		JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE);
-    		dispose();
-    		return;
-    	}
-	
 		setTitle("Cálculo Dijkstra");
 		setBounds(100, 100, 625, 380);
 		setLocationRelativeTo(null);
@@ -130,8 +125,11 @@ public class CalculoDijkstra extends JDialog {
 			panel_1.setLayout(new BorderLayout(0, 0));
 			
 			textArea = new JTextArea();
+			textArea.setFont(new Font("Courier New", Font.PLAIN, 14));
 			textArea.setEditable(false);
-			panel_1.add(textArea, BorderLayout.CENTER);
+			scrollPane = new JScrollPane(textArea);
+	        panel_1.add(scrollPane, BorderLayout.CENTER);
+			
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -159,25 +157,25 @@ public class CalculoDijkstra extends JDialog {
 						
 						if (rdbtnTodas.isSelected()) {
 							
-							resultado.append("Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
+							resultado.append(" Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
 							
 							for (int i = 0; i < distancias.length; i++) {
 								String nodoDestino = Grafo.getInstance().getMisNodos().get(i).getNombreUbicacion();
-								resultado.append(String.format("%-15s\t%3d km\n", nodoDestino, distancias[i]));
+								resultado.append(String.format(" %-15s\t%3d km\n", nodoDestino, distancias[i]));
 							}
 							
 						} else if(rdbtnEspcf.isSelected() && destino != null){
 							
-							resultado.append("Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
+							resultado.append(" Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
 							
 							int destinoIndex = Grafo.getInstance().buscarIndexByNombre(destino);
 							
 			                if (destinoIndex != -1) {
-			                	resultado.append(String.format("%-15s\t%3d km\n", destino, distancias[destinoIndex]));
+			                	resultado.append(String.format(" %-15s\t%3d km\n", destino, distancias[destinoIndex]));
 			                }
 							
 						} else {
-							resultado.append("Destino no válido");
+							resultado.append(" Destino no válido");
 						}
 						textArea.setText(resultado.toString());
 					}
@@ -190,7 +188,6 @@ public class CalculoDijkstra extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
 						dispose();
 					}
 				});
@@ -199,6 +196,8 @@ public class CalculoDijkstra extends JDialog {
 			}
 		}
 		
+		
+
 		cargarDatos();
 	}
 
@@ -216,6 +215,4 @@ public class CalculoDijkstra extends JDialog {
 			cbxDestino.addItem(nodo.getNombreUbicacion());
 		}
 	}
-	
-	
 }
