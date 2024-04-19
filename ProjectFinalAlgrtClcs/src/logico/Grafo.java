@@ -175,6 +175,19 @@ public class Grafo {
 		return aux;
 	}
 	
+	public boolean existeArista(String origen, String destino, int peso) {
+		
+		boolean existe = false;
+		
+		for (Arista arista : misAristas) {
+	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino) && arista.getPeso() == peso) ||
+	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getPeso() == peso)) {
+	            existe = true;
+	        }
+	    }
+	    return existe;
+	}
+	
 	//METODOS DIJKSTRA//
 	
     public int[] calcularDijkstra(int matrizAdyacencia[][], int origen)  {

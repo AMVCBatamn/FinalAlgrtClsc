@@ -82,6 +82,21 @@ public class ListarConexion extends JDialog {
 				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
+						int index = -1; 
+						index = table.getSelectedRow();
+						if (index != -1) {
+							
+							Arista selected = Grafo.getInstance().buscarAristaByCodigo(table.getValueAt(index, 0).toString().substring(4));
+							ModificarConexion mod = new ModificarConexion(selected);
+							mod.setModal(true);
+							mod.setVisible(true);
+							loadConexiones();
+							
+						} else {
+							
+							JOptionPane.showMessageDialog(null, "Por favor, seleccione una conexión para modificar.", "Modificar Conexión", JOptionPane.WARNING_MESSAGE);
+						}
+						
 					}
 				});
 				btnModificar.setActionCommand("OK");
@@ -128,8 +143,8 @@ public class ListarConexion extends JDialog {
 	
 	private void loadConexiones() {
 		
-		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
+		model.setRowCount(0);
 		
 		for (Arista arista : Grafo.getInstance().getMisAristas()) {
 			rows[0] = "Cxn-"+arista.getCodigo();
@@ -137,6 +152,7 @@ public class ListarConexion extends JDialog {
 			rows[2] = arista.getUbicacionDestino().getNombreUbicacion();
 			rows[3] = arista.getPeso();
 			model.addRow(rows);
-		}		
+		}
+		table.clearSelection();
 	}
 }

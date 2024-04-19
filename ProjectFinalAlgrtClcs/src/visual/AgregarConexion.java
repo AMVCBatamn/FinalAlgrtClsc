@@ -252,7 +252,15 @@ public class AgregarConexion extends JDialog {
 
 	    	Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso);
 	    	Grafo.getInstance().insertarArista(temp);
+	    	clean();
 	    }
 	    actualizarTabla();
+	}
+	
+	private void clean() {
+		cbxOrigen.setSelectedIndex(0);
+		spnPeso.setEnabled(false);
+		spnPeso.setValue(1);
+		table.clearSelection();
 	}
 }

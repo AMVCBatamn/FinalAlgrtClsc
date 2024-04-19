@@ -78,7 +78,7 @@ public class ListarUbicaciones extends JDialog {
         btnModificar.addActionListener(e -> {
             int filaSeleccionada = table.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int codigoNodo = (int) table.getValueAt(filaSeleccionada, 0);
+                int codigoNodo = Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString().substring(5));
                 Nodo nodoModificar = null;
                 for (Nodo nodo : grafo.getMisNodos()) {
                     if (nodo.getCodigo() == codigoNodo) {
@@ -96,7 +96,7 @@ public class ListarUbicaciones extends JDialog {
 
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione un nodo para modificar.", "Modificar Nodo", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para modificar.", "Modificar Ubicación", JOptionPane.WARNING_MESSAGE);
             }
         });
 
