@@ -1,4 +1,3 @@
-// ListarUbicaciones.java
 package visual;
 
 import javax.swing.*;
@@ -56,7 +55,7 @@ public class ListarUbicaciones extends JDialog {
         btnEliminar.addActionListener(e -> {
             int filaSeleccionada = table.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este nodo?", "Eliminar Nodo", JOptionPane.YES_NO_OPTION);
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta ubicación ?", "Eliminar Ubicación", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
                     int codigoNodo = (int) table.getValueAt(filaSeleccionada, 0);
                     Nodo nodoEliminar = null;
@@ -72,7 +71,7 @@ public class ListarUbicaciones extends JDialog {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione un nodo para eliminar.", "Eliminar Nodo", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para eliminar.", "Eliminar Ubicación", JOptionPane.WARNING_MESSAGE);
             }
         });
         
@@ -88,7 +87,7 @@ public class ListarUbicaciones extends JDialog {
                     }
                 }
                 if (nodoModificar != null) {
-                    ModificarNodo modificarNodo = new ModificarNodo();
+                    ModificarUbicacion modificarNodo = new ModificarUbicacion();
                     modificarNodo.setGrafo(grafo);
                     modificarNodo.setNodo(nodoModificar);
                     modificarNodo.setModal(true); 
@@ -118,7 +117,7 @@ public class ListarUbicaciones extends JDialog {
 
             for (Nodo nodo : nodos) {
                 Object[] rowData = {
-                        nodo.getCodigo(),
+                		"Ubic-"+nodo.getCodigo(),
                         nodo.getValor(),
                         nodo.getNombreUbicacion(),
                         nodo.getLonguitud(),

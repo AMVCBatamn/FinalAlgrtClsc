@@ -117,14 +117,26 @@ public class Menu extends JFrame {
         JMenuItem mntmNewMenuItem_9 = new JMenuItem("Agregar Conexión");
         mntmNewMenuItem_9.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		AgregarConexion conexion = new AgregarConexion();
-        		conexion.setModal(true);
-        		conexion.setVisible(true);
+        		
+        		if (Grafo.getInstance() == null || Grafo.getInstance().getMisNodos().size() == 0 || Grafo.getInstance().getMisAristas().size() == 0) {
+        			JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE);
+        		} else {
+            		AgregarConexion conexion = new AgregarConexion();
+            		conexion.setModal(true);
+            		conexion.setVisible(true);
+        		}
         	}
         });
         mnNewMenu_3.add(mntmNewMenuItem_9);
         
         JMenuItem mntmNewMenuItem_10 = new JMenuItem("Listar Conexiones");
+        mntmNewMenuItem_10.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ListarConexion listarConex = new ListarConexion();
+        		listarConex.setModal(true);
+        		listarConex.setVisible(true);
+        	}
+        });
         mnNewMenu_3.add(mntmNewMenuItem_10);
 
         JMenu mnNewMenu_1 = new JMenu("Calculo de ruta");

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import logico.Arista;
 import logico.Grafo;
@@ -22,21 +23,25 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JTable;
 
 public class AgregarConexion extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox cbxOrigen;
 	private JSpinner spnPeso;
-	private JList listConocidas;
-	private JList listDesconocidas;
-	private DefaultListModel<String> defaultConocidos;
-	private DefaultListModel<String> defaultDesconocidos;
+	private JTable table;
+	private DefaultTableModel model;
+	private static Object[] rows;
 
 	/**
 	 * Launch the application.
@@ -69,83 +74,73 @@ public class AgregarConexion extends JDialog {
 			panel.setLayout(null);
 			
 			JLabel lblOrigen = new JLabel("Origen:");
-			lblOrigen.setBounds(43, 43, 58, 14);
+			lblOrigen.setBounds(43, 36, 58, 14);
 			panel.add(lblOrigen);
 			
 			cbxOrigen = new JComboBox();
 			cbxOrigen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					loadConocidos();
-					loadDesconocidos();
+					actualizarTabla();
+					spnPeso.setEnabled(false);
 				}
 			});
 			cbxOrigen.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-			cbxOrigen.setBounds(111, 40, 170, 20);
+			cbxOrigen.setBounds(111, 33, 170, 20);
 			panel.add(cbxOrigen);
 			
 			JLabel lblNewLabel = new JLabel("Peso:");
-			lblNewLabel.setBounds(357, 43, 46, 14);
+			lblNewLabel.setBounds(357, 36, 46, 14);
 			panel.add(lblNewLabel);
 			
 			spnPeso = new JSpinner();
-			spnPeso.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-			spnPeso.setBounds(413, 40, 170, 20);
+			spnPeso.setEnabled(false);
+			spnPeso.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spnPeso.setBounds(413, 33, 170, 20);
 			panel.add(spnPeso);
 			
 			JPanel panel_1 = new JPanel();
-			panel_1.setBorder(new TitledBorder(null, "Ubicaci\u00F3n Destino:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel_1.setBounds(34, 100, 590, 305);
+			panel_1.setBounds(34, 92, 590, 325);
 			panel.add(panel_1);
-			panel_1.setLayout(null);
-			
-			JPanel panel_2 = new JPanel();
-			panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel_2.setBounds(21, 49, 216, 207);
-			panel_1.add(panel_2);
-			panel_2.setLayout(new BorderLayout(0, 0));
+			panel_1.setLayout(new BorderLayout(0, 0));
 			
 			JScrollPane scrollPane = new JScrollPane();
-			panel_2.add(scrollPane, BorderLayout.CENTER);
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			panel_1.add(scrollPane, BorderLayout.CENTER);
 			
-			defaultConocidos = new DefaultListModel<String>();
-			defaultDesconocidos = new DefaultListModel<String>();
+			model = new DefaultTableModel();
+	        String[] header = {"Código", "Ubicación ", "Valor", "Longitud", "Latitud"};
+	        model.setColumnIdentifiers(header);
 			
-			listConocidas = new JList();
-			listConocidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			scrollPane.setViewportView(listConocidas);
-			listConocidas.setModel(defaultConocidos);
-			
-			JPanel panel_3 = new JPanel();
-			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel_3.setBounds(353, 49, 216, 207);
-			panel_1.add(panel_3);
-			panel_3.setLayout(new BorderLayout(0, 0));
-			
-			JScrollPane scrollPane_1 = new JScrollPane();
-			panel_3.add(scrollPane_1, BorderLayout.CENTER);
-			
-			listDesconocidas = new JList();
-			listDesconocidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			scrollPane_1.setViewportView(listDesconocidas);
-			listDesconocidas.setModel(defaultDesconocidos);
-			
-			JButton btnDerecha = new JButton(">>");
-			btnDerecha.setEnabled(false);
-			btnDerecha.setBounds(258, 112, 74, 23);
-			panel_1.add(btnDerecha);
-			
-			JButton btnIzquierda = new JButton("<<");
-			btnIzquierda.setEnabled(false);
-			btnIzquierda.setBounds(258, 156, 74, 23);
-			panel_1.add(btnIzquierda);
-			
-			JLabel lblNewLabel_1 = new JLabel("Conocidas:");
-			lblNewLabel_1.setBounds(21, 31, 130, 14);
-			panel_1.add(lblNewLabel_1);
-			
-			JLabel lblNewLabel_2 = new JLabel("Desconocidas:");
-			lblNewLabel_2.setBounds(353, 31, 141, 14);
-			panel_1.add(lblNewLabel_2);
+			table = new JTable();
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int index = -1; 
+					index = table.getSelectedRow();
+					if (index != -1) {
+						
+						Nodo UbiSelected = Grafo.getInstance().buscarNodoByNombre(table.getValueAt(index, 1).toString());
+						String origen = (String) cbxOrigen.getSelectedItem();
+						
+						if (UbiSelected.getNombreUbicacion().equalsIgnoreCase(origen)) {
+							
+							spnPeso.setEnabled(true);
+			                spnPeso.setValue(0);
+			                
+						} else {
+							
+							spnPeso.setEnabled(true);
+							spnPeso.setValue(1);
+						}
+						
+					} else {
+						
+						spnPeso.setEnabled(false);
+					}
+				}
+			});
+			scrollPane.setViewportView(table);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -154,82 +149,84 @@ public class AgregarConexion extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Agregar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						agregarConexion();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
 		loadUbicaciones();
-		
+		actualizarTabla();
 	}
-
-	private void loadConocidos() {
 	
-		if (cbxOrigen.getSelectedIndex() == -1) {
-		    clean();
-		    
-		} else {
+	private void actualizarTabla() {
+		
+		if (Grafo.getInstance() != null && model != null && cbxOrigen.getSelectedIndex() != -1) {
+			model.setRowCount(0);
+			rows = new Object[model.getColumnCount()];
 			
-			Nodo origen = Grafo.getInstance().buscarNodoByNombre((String) cbxOrigen.getSelectedItem());   
+			Nodo origen = Grafo.getInstance().buscarNodoByNombre((String) cbxOrigen.getSelectedItem());
 			
-		    if(origen != null) {
-		        clean();
-		        
-		        for (Arista arista: Grafo.getInstance().getMisAristas()) {
-		            
-		        	if(arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen.getNombreUbicacion())) {
-		        
-		        		defaultConocidos.addElement(arista.getUbicacionDestino().getNombreUbicacion());
-		            	
-		            }else if(arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen.getNombreUbicacion())) {
-		            	
-		            	defaultConocidos.addElement(arista.getUbicacionOrigen().getNombreUbicacion());
-		            }
-		        }
-		    }   
+			if (origen != null) {
+				
+				ArrayList<Nodo> desconocidos = loadDesconocidos(origen);
+							
+				for (Nodo nodo : desconocidos) {
+					rows[0] = "Cxn-"+nodo.getCodigo();
+					rows[1] = nodo.getNombreUbicacion();
+					rows[2] = nodo.getValor();
+					rows[3] = nodo.getLonguitud();
+					rows[4] = nodo.getLatitud();
+					model.addRow(rows);	
+				}
+			}
+			table.setModel(model);
 		}
 	}
 
-	private void loadDesconocidos() {
+	private ArrayList<Nodo> loadDesconocidos(Nodo origen) {
 		
-		if (cbxOrigen.getSelectedIndex() == -1) {
+		ArrayList<Nodo> desconocidos = new ArrayList<>();
+		
+		for (Nodo nodo : Grafo.getInstance().getMisNodos()) {
 			
-			clean();
-			
-		} else {
-			
-			Nodo origen = Grafo.getInstance().buscarNodoByNombre((String)cbxOrigen.getSelectedItem());
-			if(origen != null) {
-				
-				for (Nodo nodo : Grafo.getInstance().getMisNodos()) {
-					
-					if(!esConocido(nodo.getNombreUbicacion())) {
-						defaultDesconocidos.addElement(nodo.getNombreUbicacion());
-					}
-				}
+			if(!esConocido(nodo.getNombreUbicacion(),origen)) {
+				desconocidos.add(nodo);
 			}
-		} 
+		}
+		
+		return desconocidos;	
 	}
-
-	private boolean esConocido(String nombreUbicacion) {
+	
+	private boolean esConocido(String nombreUbicacion, Nodo origen) {
 		
 		boolean conocido = false;
 		
-		for (int i = 0; i < defaultConocidos.size(); i++) {
+		for (Arista arista : Grafo.getInstance().getMisAristas()) {
 			
-			if(defaultConocidos.getElementAt(i).equalsIgnoreCase(nombreUbicacion)) {
+			if ((arista.getUbicacionOrigen().equals(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(nombreUbicacion)) || 
+					(arista.getUbicacionDestino().equals(origen) && arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(nombreUbicacion))) {
+	            
 				conocido = true;
-			}
+	        }	
 		}
-		
 		return conocido;
 	}
-
+	
 	private void loadUbicaciones() {
 		
 		if (cbxOrigen == null ) {
@@ -243,9 +240,19 @@ public class AgregarConexion extends JDialog {
 		}
 	}
 	
-	private void clean() {
-		defaultConocidos.removeAllElements();
-		defaultDesconocidos.removeAllElements();
+	private void agregarConexion() {
 		
+		String origen = (String) cbxOrigen.getSelectedItem();
+	    int peso = (int) spnPeso.getValue();
+	    
+	    if (cbxOrigen.getSelectedIndex() == -1 || table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una opción válida.", "Agregar Conexión", JOptionPane.WARNING_MESSAGE);
+            
+	    } else {
+
+	    	Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso);
+	    	Grafo.getInstance().insertarArista(temp);
+	    }
+	    actualizarTabla();
 	}
 }

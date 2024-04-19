@@ -25,7 +25,7 @@ import javax.swing.JOptionPane; // Importar JOptionPane
 import logico.Grafo;
 import logico.Nodo;
 
-public class ModificarNodo extends JDialog {
+public class ModificarUbicacion extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
@@ -42,7 +42,7 @@ public class ModificarNodo extends JDialog {
      */
     public static void main(String[] args) {
         try {
-            ModificarNodo dialog = new ModificarNodo();
+            ModificarUbicacion dialog = new ModificarUbicacion();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class ModificarNodo extends JDialog {
     /**
      * Create the dialog.
      */
-    public ModificarNodo() {
+    public ModificarUbicacion() {
     	setTitle("Modificar Ubicación");
         setBounds(100, 100, 293, 398);
         setLocationRelativeTo(null); 
@@ -105,7 +105,7 @@ public class ModificarNodo extends JDialog {
             spnLongitud.setBounds(68, 211, 170, 20);
             panel.add(spnLongitud);
             
-            JLabel lblNewLabel_4 = new JLabel("Codigo:");
+            JLabel lblNewLabel_4 = new JLabel("Código:");
             lblNewLabel_4.setBounds(10, 43, 46, 14);
             panel.add(lblNewLabel_4);
             

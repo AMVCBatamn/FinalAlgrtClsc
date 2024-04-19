@@ -158,6 +158,23 @@ public class Grafo {
 		return index;
 	}
 	
+	public Arista buscarAristaByCodigo(String codigo) {
+		
+		Arista aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		
+		while (!encontrado && i < misAristas.size()) {
+			
+			if (misAristas.get(i).getCodigo() == Integer.parseInt(codigo)) {
+				encontrado = true;
+				aux = misAristas.get(i);
+			}
+			i++;
+		}
+		return aux;
+	}
+	
 	//METODOS DIJKSTRA//
 	
     public int[] calcularDijkstra(int matrizAdyacencia[][], int origen)  {
