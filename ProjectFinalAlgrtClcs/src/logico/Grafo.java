@@ -175,17 +175,38 @@ public class Grafo {
 		return aux;
 	}
 	
-	public boolean existeArista(String origen, String destino, int peso) {
+	public int buscarAristaIndexByCodigo(int codigo) {
+		
+		int index = -1;
+		boolean encontrado = false;
+		int i = 0;
+		
+		while(!encontrado && i < misAristas.size()) {
+
+			if(misAristas.get(i).getCodigo() == codigo) {
+				encontrado = true;
+				index = i;
+			}
+			i++;
+		}
+		return index;
+	}
+	
+	public boolean existeArista(String origen, String destino) {
 		
 		boolean existe = false;
 		
 		for (Arista arista : misAristas) {
-	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino) && arista.getPeso() == peso) ||
-	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getPeso() == peso)) {
+	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino)) ||
+	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen))) {
 	            existe = true;
 	        }
 	    }
 	    return existe;
+	}
+	
+	public void actualizarArista(int index, Arista nuevoArista) {
+		misAristas.add(index, nuevoArista);
 	}
 	
 	//METODOS DIJKSTRA//
@@ -359,7 +380,7 @@ public class Grafo {
 		}
 		
 		for (int i = 1; i < misNodos.size(); i++) {
-			aristasPrim.add(new Arista(misNodos.get(i), misNodos.get(padres[i]), minPesos[i]));
+			aristasPrim.add(new Arista(misNodos.get(i), misNodos.get(padres[i]), minPesos[i],0));
 		}
 
 		return aristasPrim;
@@ -456,6 +477,4 @@ public class Grafo {
 	        System.out.println("Costo Total: " + total);
 	    }
 	}
-
-	
 }

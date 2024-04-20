@@ -250,8 +250,8 @@ public class AgregarConexion extends JDialog {
             
 	    } else {
 
-	    	Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso);
-	    	Grafo.getInstance().insertarArista(temp);
+	    	//Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso);
+	    	//Grafo.getInstance().insertarArista(temp);
 	    	clean();
 	    }
 	    actualizarTabla();

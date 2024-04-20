@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class ListarConexion extends JDialog {
 
@@ -67,6 +68,7 @@ public class ListarConexion extends JDialog {
 			        model.setColumnIdentifiers(header);
 			        
 					table = new JTable();
+					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					scrollPane.setViewportView(table);
 					table.setModel(model);
 				}

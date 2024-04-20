@@ -6,14 +6,16 @@ public class Arista {
     private Nodo ubicacionOrigen;
     private Nodo ubicacionDestino;
     private int peso;
+    private int tiempo;
 	private static int codigoArista = 1;
     
-	public Arista(Nodo ubicacionOrigen, Nodo ubicacionDestino, int peso) {
+	public Arista(Nodo ubicacionOrigen, Nodo ubicacionDestino, int peso, int tiempo) {
 		super();
 		this.codigo = codigoArista++;
 		this.ubicacionOrigen = ubicacionOrigen;
 		this.ubicacionDestino = ubicacionDestino;
 		this.peso = peso;
+		this.tiempo = tiempo;
 	}
 	
 	public int getCodigo() {
@@ -46,5 +48,13 @@ public class Arista {
 
 	public static int getCodigoArista() {
 		return codigoArista;
+	}
+
+	public int getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(int tiempo) {
+		this.tiempo = tiempo;
 	}
 }

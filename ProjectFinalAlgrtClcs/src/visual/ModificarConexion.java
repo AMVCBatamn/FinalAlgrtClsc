@@ -83,11 +83,21 @@ public class ModificarConexion extends JDialog {
 			panel.add(spnPeso);
 			
 			cbxDestino = new JComboBox();
+			cbxDestino.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reloadUbicaciones();
+				}
+			});
 			cbxDestino.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
 			cbxDestino.setBounds(165, 95, 146, 20);
 			panel.add(cbxDestino);
 			
 			cbxOrigen = new JComboBox();
+			cbxOrigen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reloadUbicaciones();
+				}
+			});
 			cbxOrigen.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
 			cbxOrigen.setBounds(165, 39, 146, 20);
 			panel.add(cbxOrigen);
@@ -102,9 +112,42 @@ public class ModificarConexion extends JDialog {
 				tbnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
+						String origen = (String) cbxOrigen.getSelectedItem();
+						String destino = (String) cbxDestino.getSelectedItem();
+						int peso = (int) spnPeso.getValue();
 						
-						JOptionPane.showMessageDialog(null, "Conexión modificada correctamente.");
-						dispose();
+						if (origen.equals("<Seleccione>") || destino.equals("<Seleccione>")) {
+							
+							JOptionPane.showMessageDialog(null, "Por favor, ingrese una opción válida", "Error", JOptionPane.WARNING_MESSAGE);
+							
+						} else {
+							
+							int codigo = selected.getCodigo();
+							Nodo nuevoOrigen = Grafo.getInstance().buscarNodoByNombre(cbxOrigen.getSelectedItem().toString());
+							Nodo nuevoDestino = Grafo.getInstance().buscarNodoByNombre(cbxDestino.getSelectedItem().toString());
+							
+							if (origen.equalsIgnoreCase(destino)) {
+								peso = 0;
+								spnPeso.setValue(0);
+							}
+							
+						//	Arista nuevoArista = new Arista(nuevoOrigen, nuevoDestino, peso);
+							int index = Grafo.getInstance().buscarAristaIndexByCodigo(codigo);
+							
+							if (Grafo.getInstance().existeArista(origen, destino)) {
+								
+								JOptionPane.showMessageDialog(null, "La conexión ya existe en el grafo. Por favor, elija otra.", "Error", JOptionPane.ERROR_MESSAGE);
+								
+							} else {
+								
+							//	Grafo.getInstance().actualizarArista(index,nuevoArista);
+								Grafo.getInstance().eliminarArista(selected);
+								
+								JOptionPane.showMessageDialog(null, "Conexión modificada correctamente.", "Modificar", JOptionPane.INFORMATION_MESSAGE);
+								clean();
+								dispose();	
+							}
+						}
 					}
 				});
 				tbnModificar.setActionCommand("OK");
@@ -144,15 +187,26 @@ public class ModificarConexion extends JDialog {
 			cbxDestino.setSelectedItem(arista.getUbicacionDestino().getNombreUbicacion());
 			cbxOrigen.setSelectedItem(arista.getUbicacionOrigen().getNombreUbicacion());
 			spnPeso.setValue(arista.getPeso());
-			
-			if (arista.getPeso() == 0 && cbxDestino.getSelectedItem().equals(cbxOrigen.getSelectedItem())) {
-				
-				spnPeso.setEnabled(false);
-				
-			} else {
-				
-				spnPeso.setEnabled(true);
-			}
-		}	
+			reloadUbicaciones();
+		}
+	}
+	
+	private void reloadUbicaciones() {
+		
+		String origen = (String) cbxOrigen.getSelectedItem();
+        String destino = (String) cbxDestino.getSelectedItem();
+
+        if (origen.equalsIgnoreCase("<Seleccione>") || destino.equalsIgnoreCase("<Seleccione>") || origen.equalsIgnoreCase(destino)) {
+            spnPeso.setEnabled(false);
+            spnPeso.setValue(0);
+        } else {
+            spnPeso.setEnabled(true);
+        }
+	}
+	
+	private void clean() {
+		cbxOrigen.setSelectedItem("<Seleccione>");
+		cbxDestino.setSelectedItem("<Seleccione>");
+	    spnPeso.setValue(1);
 	}
 }

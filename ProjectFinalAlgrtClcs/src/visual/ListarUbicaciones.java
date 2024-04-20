@@ -34,6 +34,7 @@ public class ListarUbicaciones extends JDialog {
         model.setColumnIdentifiers(header);
 
         table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 

@@ -17,8 +17,8 @@ public class Main {
 		grafo.insertarNodo(B);
 		grafo.insertarNodo(C);
 		
-		Arista arista1 = new Arista(A, B, 5);
-		Arista arista2 = new Arista(B, C, 8);
+		Arista arista1 = new Arista(A, B, 5, 23);
+		Arista arista2 = new Arista(B, C, 8, 10);
 		//Arista arista3 = new Arista(A, C, 1);
 		
 		///PROBANDO LOS METODOS:
