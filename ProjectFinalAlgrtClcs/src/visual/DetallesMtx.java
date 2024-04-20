@@ -34,7 +34,7 @@ public class DetallesMtx extends JDialog {
             e.printStackTrace();
         }
     }
-
+//
     /**
      * Create the dialog.
      */
