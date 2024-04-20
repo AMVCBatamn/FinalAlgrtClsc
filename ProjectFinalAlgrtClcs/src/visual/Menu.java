@@ -168,6 +168,22 @@ public class Menu extends JFrame {
 
         JMenuItem mntmNewMenuItem_6 = new JMenuItem("Planificación de Ruta");
         mnNewMenu_2.add(mntmNewMenuItem_6);
+        
+        JMenu mnNewMenu_4 = new JMenu("Detalles");
+        menuBar.add(mnNewMenu_4);
+        
+        JMenuItem mntmNewMenuItem_7 = new JMenuItem("Ver Matriz Adyacencia");
+        mnNewMenu_4.add(mntmNewMenuItem_7);
+        
+        JMenuItem mntmNewMenuItem_8 = new JMenuItem("Ver Grafo");
+        mntmNewMenuItem_8.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		VerGrafo verGrafo = new VerGrafo();
+        		verGrafo.setModal(true);
+        		verGrafo.setVisible(true);
+        	}
+        });
+        mnNewMenu_4.add(mntmNewMenuItem_8);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
