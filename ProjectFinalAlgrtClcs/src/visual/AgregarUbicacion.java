@@ -20,7 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane; // Importar JOptionPane
+import javax.swing.JOptionPane; 
 
 import logico.Grafo;
 import logico.Nodo;
@@ -131,14 +131,27 @@ public class AgregarUbicacion extends JDialog {
             	        double latitud = (double) spnLatitud.getValue();
             	        Nodo nuevoNodo = new Nodo(valor, nombre, longitud, latitud);
             	        
-            	        txtcodigo.setText("Ubic-" + Nodo.getCodigoNodo());
-            	        spnValor.setValue(0);
-            	        txtNombre.setText("");
-            	        spnLongitud.setValue(0.0);
-            	        spnLatitud.setValue(0.0);
-            	        //
-            	        Grafo.getInstance().insertarNodo(nuevoNodo);
-            	        JOptionPane.showMessageDialog(null, "Ubicación agregada correctamente.");
+            	        // Verificar si la ubicación ya existe
+                        boolean existe = false;
+                        for (Nodo nodo : Grafo.getInstance().getMisNodos()) {
+                            if (nodo.getNombreUbicacion().equalsIgnoreCase(nombre)) {
+                                existe = true;
+                                break;
+                            }
+                        }
+                        
+                        if (existe) {
+                            JOptionPane.showMessageDialog(null, "La ubicación ya existe.", "Error", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            txtcodigo.setText("Ubic-" + Nodo.getCodigoNodo());
+                            spnValor.setValue(0);
+                            txtNombre.setText("");
+                            spnLongitud.setValue(0.0);
+                            spnLatitud.setValue(0.0);
+                            Grafo.getInstance().insertarNodo(nuevoNodo);
+                            JOptionPane.showMessageDialog(null, "Ubicación agregada correctamente.");
+                            dispose();
+                        }
             	    }
             	});
 
@@ -168,4 +181,3 @@ public class AgregarUbicacion extends JDialog {
         this.grafo = grafo;
     }
 }
-

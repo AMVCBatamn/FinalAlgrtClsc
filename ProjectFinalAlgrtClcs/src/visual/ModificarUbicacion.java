@@ -20,7 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane; // Importar JOptionPane
+import javax.swing.JOptionPane; // imp JOptionPane
 
 import logico.Grafo;
 import logico.Nodo;
@@ -35,7 +35,7 @@ public class ModificarUbicacion extends JDialog {
     private JSpinner spnLongitud;
     private Grafo grafo;
     private JTextField txtcodigo;
-    private Nodo nodo; // Agregar variable para el nodo seleccionado
+    private Nodo nodo; //  variablo  para el nodo seleccionado
 
     /**
      * Launch the application.
@@ -62,6 +62,7 @@ public class ModificarUbicacion extends JDialog {
         contentPanel.setLayout(new BorderLayout(0, 0));
         {
             JPanel panel = new JPanel();
+            panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
             contentPanel.add(panel, BorderLayout.CENTER);
             panel.setLayout(null);
             {
@@ -130,14 +131,27 @@ public class ModificarUbicacion extends JDialog {
             	        String nombre = txtNombre.getText();
             	        double longitud = (double) spnLongitud.getValue();
             	        double latitud = (double) spnLatitud.getValue();
-            	        nodo.setValor(valor);
-            	        nodo.setNombreUbicacion(nombre);
-            	        nodo.setLonguitud(longitud);
-            	        nodo.setLatitud(latitud);
             	        
-            	        Grafo.getInstance().actualizarNodo(nodo, nombre, longitud, latitud);
-            	        JOptionPane.showMessageDialog(null, "Ubicación modificada correctamente.");
-            	        dispose();
+                        boolean existe = false;
+                        for (Nodo nodo : Grafo.getInstance().getMisNodos()) {
+                            if (nodo.getNombreUbicacion().equalsIgnoreCase(nombre) && nodo.getCodigo() != ModificarUbicacion.this.nodo.getCodigo()) {
+                                existe = true;
+                                break;
+                            }
+                        }
+                        
+                        if (existe) {
+                            JOptionPane.showMessageDialog(null, "La ubicación ya existe.", "Error", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            nodo.setValor(valor);
+                            nodo.setNombreUbicacion(nombre);
+                            nodo.setLonguitud(longitud);
+                            nodo.setLatitud(latitud);
+                            
+                            Grafo.getInstance().actualizarNodo(nodo, nombre, longitud, latitud);
+                            JOptionPane.showMessageDialog(null, "Ubicación modificada correctamente.");
+                            dispose();
+                        }
             	    }
             	});
 
@@ -181,3 +195,4 @@ public class ModificarUbicacion extends JDialog {
         }
     }
 }
+

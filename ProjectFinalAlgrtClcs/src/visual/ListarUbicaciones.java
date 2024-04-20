@@ -7,6 +7,8 @@ import logico.Grafo;
 import logico.Nodo;
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListarUbicaciones extends JDialog {
 
@@ -44,62 +46,70 @@ public class ListarUbicaciones extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
         
         btnModificar = new JButton("Modificar");
+        btnModificar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = table.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    int codigoNodo = Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString().substring(5));
+                    Nodo nodoModificar = null;
+                    for (Nodo nodo : grafo.getMisNodos()) {
+                        if (nodo.getCodigo() == codigoNodo) {
+                            nodoModificar = nodo;
+                            break;
+                        }
+                    }
+                    if (nodoModificar != null) {
+                        ModificarUbicacion modificarNodo = new ModificarUbicacion();
+                        modificarNodo.setGrafo(grafo);
+                        modificarNodo.setNodo(nodoModificar);
+                        modificarNodo.setModal(true); 
+                        modificarNodo.setVisible(true);
+                        actualizarTabla();
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para modificar.", "Modificar Ubicación", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         buttonPane.add(btnModificar);
 
         btnEliminar = new JButton("Eliminar");
+        btnEliminar.addActionListener(new ActionListener() {
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		
+                int filaSeleccionada = table.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta ubicación ?", "Eliminar Ubicación", JOptionPane.YES_NO_OPTION);
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        int codigoNodo = Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString().substring(5));
+                        Nodo nodoEliminar = null;
+                        for (Nodo nodo : grafo.getMisNodos()) {
+                            if (nodo.getCodigo() == codigoNodo) {
+                                nodoEliminar = nodo;
+                                break;
+                            }
+                        }
+                        if (nodoEliminar != null) {
+                            grafo.eliminarNodo(nodoEliminar);
+                            actualizarTabla();
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para eliminar.", "Eliminar Ubicación", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         buttonPane.add(btnEliminar);
 
         JButton cancelButton = new JButton("Cancelar");
         cancelButton.addActionListener(e -> dispose());
         buttonPane.add(cancelButton);
 
-        btnEliminar.addActionListener(e -> {
-            int filaSeleccionada = table.getSelectedRow();
-            if (filaSeleccionada != -1) {
-                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar esta ubicación ?", "Eliminar Ubicación", JOptionPane.YES_NO_OPTION);
-                if (opcion == JOptionPane.YES_OPTION) {
-                    int codigoNodo = (int) table.getValueAt(filaSeleccionada, 0);
-                    Nodo nodoEliminar = null;
-                    for (Nodo nodo : grafo.getMisNodos()) {
-                        if (nodo.getCodigo() == codigoNodo) {
-                            nodoEliminar = nodo;
-                            break;
-                        }
-                    }
-                    if (nodoEliminar != null) {
-                        grafo.eliminarNodo(nodoEliminar);
-                        actualizarTabla();
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para eliminar.", "Eliminar Ubicación", JOptionPane.WARNING_MESSAGE);
-            }
-        });
+ 
         
-        btnModificar.addActionListener(e -> {
-            int filaSeleccionada = table.getSelectedRow();
-            if (filaSeleccionada != -1) {
-                int codigoNodo = Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString().substring(5));
-                Nodo nodoModificar = null;
-                for (Nodo nodo : grafo.getMisNodos()) {
-                    if (nodo.getCodigo() == codigoNodo) {
-                        nodoModificar = nodo;
-                        break;
-                    }
-                }
-                if (nodoModificar != null) {
-                    ModificarUbicacion modificarNodo = new ModificarUbicacion();
-                    modificarNodo.setGrafo(grafo);
-                    modificarNodo.setNodo(nodoModificar);
-                    modificarNodo.setModal(true); 
-                    modificarNodo.setVisible(true);
-                    actualizarTabla();
 
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para modificar.", "Modificar Ubicación", JOptionPane.WARNING_MESSAGE);
-            }
-        });
 
         setLocationRelativeTo(null);
         setResizable(false);
