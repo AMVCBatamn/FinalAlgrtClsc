@@ -48,10 +48,8 @@ public class DetallesMtx extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Obtener la matriz de adyacencia usando el algoritmo de Floyd-Warshall
         matrizAdyacencia = grafo.calcularFloydWarchall();
 
-        // Crear el modelo de tabla
         model = new DefaultTableModel(matrizAdyacencia.length, matrizAdyacencia[0].length);
         for (int i = 0; i < matrizAdyacencia.length; i++) {
             for (int j = 0; j < matrizAdyacencia[0].length; j++) {
@@ -122,7 +120,6 @@ public class DetallesMtx extends JDialog {
         buttonPane.add(cancelButton);
     }
 
-    // Muestra todos los pesos de la matriz
     private void mostrarPesos() {
         for (int i = 0; i < matrizAdyacencia.length; i++) {
             for (int j = 0; j < matrizAdyacencia[0].length; j++) {
@@ -131,7 +128,6 @@ public class DetallesMtx extends JDialog {
         }
     }
 
-    // Oculta los pesos de la matriz y muestra 1 en su lugar
     private void ocultarPesos() {
         for (int i = 0; i < matrizAdyacencia.length; i++) {
             for (int j = 0; j < matrizAdyacencia[0].length; j++) {
