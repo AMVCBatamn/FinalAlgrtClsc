@@ -107,9 +107,6 @@ public class Menu extends JFrame {
             }
         });
         mnNewMenu.add(mntmNewMenuItem_1);
-
-        JMenuItem mntmNewMenuItem_2 = new JMenuItem("Modificar Ubicacion");
-        mnNewMenu.add(mntmNewMenuItem_2);
         
         JMenu mnNewMenu_3 = new JMenu("Gestión de Conexiones");
         menuBar.add(mnNewMenu_3);
@@ -157,14 +154,17 @@ public class Menu extends JFrame {
         });
         mnNewMenu_1.add(mntmNewMenuItem_3);
 
-        JMenuItem mntmNewMenuItem_4 = new JMenuItem("Bellman-Ford");
-        mnNewMenu_1.add(mntmNewMenuItem_4);
-
-        JMenuItem mntmNewMenuItem_5 = new JMenuItem("Floyd-Warshall");
+        JMenuItem mntmNewMenuItem_5 = new JMenuItem("Prim");
         mnNewMenu_1.add(mntmNewMenuItem_5);
+        
+        JMenuItem mntmNewMenuItem_4 = new JMenuItem("Kruskal");
+        mnNewMenu_1.add(mntmNewMenuItem_4);
 
         JMenu mnNewMenu_2 = new JMenu("Optimizacion de Rutas");
         menuBar.add(mnNewMenu_2);
+        
+        JMenuItem mntmNewMenuItem_2 = new JMenuItem("Floyd-Warshall");
+        mnNewMenu_2.add(mntmNewMenuItem_2);
 
         JMenuItem mntmNewMenuItem_6 = new JMenuItem("Agregar Ruta");
         mnNewMenu_2.add(mntmNewMenuItem_6);
