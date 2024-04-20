@@ -1,5 +1,5 @@
-
 package visual;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +18,7 @@ public class DetallesMtx extends JDialog {
     private JTable table;
     private JRadioButton rdbtnNo;
     private DefaultTableModel model;
+    private int[][] matrizAdyacencia; // Matriz de adyacencia del grafo
 
     /**
      * Launch the application.
@@ -47,11 +48,8 @@ public class DetallesMtx extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        table = new JTable();
-        scrollPane.setViewportView(table);
-
         // Obtener la matriz de adyacencia usando el algoritmo de Floyd-Warshall
-        int[][] matrizAdyacencia = grafo.calcularFloydWarchall();
+        matrizAdyacencia = grafo.calcularFloydWarchall();
 
         // Crear el modelo de tabla
         model = new DefaultTableModel(matrizAdyacencia.length, matrizAdyacencia[0].length);
@@ -60,7 +58,9 @@ public class DetallesMtx extends JDialog {
                 model.setValueAt(matrizAdyacencia[i][j], i, j);
             }
         }
-        table.setModel(model);
+
+        table = new JTable(model);
+        scrollPane.setViewportView(table);
 
         JPanel panel_1 = new JPanel();
         contentPanel.add(panel_1, BorderLayout.NORTH);
@@ -74,6 +74,7 @@ public class DetallesMtx extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 rdbtnSi.setSelected(true);
                 rdbtnNo.setSelected(false);
+                mostrarPesos();
             }
         });
         rdbtnSi.setSelected(true);
@@ -84,21 +85,63 @@ public class DetallesMtx extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 rdbtnSi.setSelected(false);
                 rdbtnNo.setSelected(true);
+                ocultarPesos();
             }
         });
         panel_1.add(rdbtnNo);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(rdbtnSi);
+        group.add(rdbtnNo);
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton okButton = new JButton("OK");
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnNo.isSelected()) {
+                    ocultarPesos();
+                } else {
+                    mostrarPesos();
+                }
+            }
+        });
         okButton.setActionCommand("OK");
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
 
         JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
         cancelButton.setActionCommand("Cancel");
         buttonPane.add(cancelButton);
     }
+
+    // Muestra todos los pesos de la matriz
+    private void mostrarPesos() {
+        for (int i = 0; i < matrizAdyacencia.length; i++) {
+            for (int j = 0; j < matrizAdyacencia[0].length; j++) {
+                model.setValueAt(matrizAdyacencia[i][j], i, j);
+            }
+        }
+    }
+
+    // Oculta los pesos de la matriz y muestra 1 en su lugar
+    private void ocultarPesos() {
+        for (int i = 0; i < matrizAdyacencia.length; i++) {
+            for (int j = 0; j < matrizAdyacencia[0].length; j++) {
+                if (matrizAdyacencia[i][j] != 0) {
+                    model.setValueAt(1, i, j);
+                } else if (model.getValueAt(i, j) == null) {
+                    model.setValueAt("", i, j);
+                }
+            }
+        }
+    }
 }
+

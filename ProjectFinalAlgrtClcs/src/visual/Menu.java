@@ -173,6 +173,13 @@ public class Menu extends JFrame {
         menuBar.add(mnNewMenu_4);
         
         JMenuItem mntmNewMenuItem_7 = new JMenuItem("Ver Matriz Adyacencia");
+        mntmNewMenuItem_7.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		DetallesMtx mtxad = new DetallesMtx(grafo);
+        		mtxad.setModal(true);
+        		mtxad.setVisible(true);
+        	}
+        });
         mnNewMenu_4.add(mntmNewMenuItem_7);
         
         JMenuItem mntmNewMenuItem_8 = new JMenuItem("Ver Grafo");
