@@ -22,6 +22,10 @@ public class Arista {
 		return codigo;
 	}
 	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	
 	public Nodo getUbicacionOrigen() {
 		return ubicacionOrigen;
 	}

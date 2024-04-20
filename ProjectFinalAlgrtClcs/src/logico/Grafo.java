@@ -206,7 +206,7 @@ public class Grafo {
 	}
 	
 	public void actualizarArista(int index, Arista nuevoArista) {
-		misAristas.add(index, nuevoArista);
+		misAristas.set(index, nuevoArista);
 	}
 	
 	//METODOS DIJKSTRA//

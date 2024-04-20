@@ -30,6 +30,7 @@ public class ModificarConexion extends JDialog {
 	private JComboBox cbxDestino;
 	private Arista arista = null;
 	private JSpinner spnPeso;
+	private JSpinner spnTiempo;
 
 	/**
 	 * Launch the application.
@@ -66,20 +67,20 @@ public class ModificarConexion extends JDialog {
 			panel.setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("Ubicación origen:");
-			lblNewLabel.setBounds(47, 42, 137, 14);
+			lblNewLabel.setBounds(47, 31, 137, 14);
 			panel.add(lblNewLabel);
 			
 			JLabel lblNewLabel_1 = new JLabel("Ubicación destino:");
-			lblNewLabel_1.setBounds(47, 98, 137, 14);
+			lblNewLabel_1.setBounds(47, 76, 137, 14);
 			panel.add(lblNewLabel_1);
 			
 			JLabel lblNewLabel_2 = new JLabel("Peso:");
-			lblNewLabel_2.setBounds(92, 154, 46, 14);
+			lblNewLabel_2.setBounds(92, 121, 46, 14);
 			panel.add(lblNewLabel_2);
 			
 			spnPeso = new JSpinner();
 			spnPeso.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-			spnPeso.setBounds(165, 151, 101, 20);
+			spnPeso.setBounds(165, 118, 101, 20);
 			panel.add(spnPeso);
 			
 			cbxDestino = new JComboBox();
@@ -89,7 +90,7 @@ public class ModificarConexion extends JDialog {
 				}
 			});
 			cbxDestino.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-			cbxDestino.setBounds(165, 95, 146, 20);
+			cbxDestino.setBounds(165, 73, 146, 20);
 			panel.add(cbxDestino);
 			
 			cbxOrigen = new JComboBox();
@@ -99,8 +100,17 @@ public class ModificarConexion extends JDialog {
 				}
 			});
 			cbxOrigen.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-			cbxOrigen.setBounds(165, 39, 146, 20);
+			cbxOrigen.setBounds(165, 28, 146, 20);
 			panel.add(cbxOrigen);
+			
+			JLabel label = new JLabel("Tiempo:");
+			label.setBounds(86, 166, 58, 14);
+			panel.add(label);
+			
+			spnTiempo = new JSpinner();
+			spnTiempo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spnTiempo.setBounds(165, 163, 101, 20);
+			panel.add(spnTiempo);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -115,6 +125,7 @@ public class ModificarConexion extends JDialog {
 						String origen = (String) cbxOrigen.getSelectedItem();
 						String destino = (String) cbxDestino.getSelectedItem();
 						int peso = (int) spnPeso.getValue();
+						int tiempo = (int) spnTiempo.getValue();
 						
 						if (origen.equals("<Seleccione>") || destino.equals("<Seleccione>")) {
 							
@@ -129,9 +140,12 @@ public class ModificarConexion extends JDialog {
 							if (origen.equalsIgnoreCase(destino)) {
 								peso = 0;
 								spnPeso.setValue(0);
+								tiempo = 0;
+								spnTiempo.setValue(0);
 							}
 							
-						//	Arista nuevoArista = new Arista(nuevoOrigen, nuevoDestino, peso);
+							Arista nuevoArista = new Arista(nuevoOrigen, nuevoDestino, peso, tiempo);
+							nuevoArista.setCodigo(codigo);
 							int index = Grafo.getInstance().buscarAristaIndexByCodigo(codigo);
 							
 							if (Grafo.getInstance().existeArista(origen, destino)) {
@@ -140,7 +154,7 @@ public class ModificarConexion extends JDialog {
 								
 							} else {
 								
-							//	Grafo.getInstance().actualizarArista(index,nuevoArista);
+								Grafo.getInstance().actualizarArista(index,nuevoArista);
 								Grafo.getInstance().eliminarArista(selected);
 								
 								JOptionPane.showMessageDialog(null, "Conexión modificada correctamente.", "Modificar", JOptionPane.INFORMATION_MESSAGE);
@@ -187,6 +201,7 @@ public class ModificarConexion extends JDialog {
 			cbxDestino.setSelectedItem(arista.getUbicacionDestino().getNombreUbicacion());
 			cbxOrigen.setSelectedItem(arista.getUbicacionOrigen().getNombreUbicacion());
 			spnPeso.setValue(arista.getPeso());
+			spnTiempo.setValue(arista.getTiempo());
 			reloadUbicaciones();
 		}
 	}
@@ -199,8 +214,11 @@ public class ModificarConexion extends JDialog {
         if (origen.equalsIgnoreCase("<Seleccione>") || destino.equalsIgnoreCase("<Seleccione>") || origen.equalsIgnoreCase(destino)) {
             spnPeso.setEnabled(false);
             spnPeso.setValue(0);
+            spnTiempo.setEnabled(false);
+            spnTiempo.setValue(0);
         } else {
             spnPeso.setEnabled(true);
+            spnTiempo.setEnabled(true);
         }
 	}
 	
@@ -208,5 +226,6 @@ public class ModificarConexion extends JDialog {
 		cbxOrigen.setSelectedItem("<Seleccione>");
 		cbxDestino.setSelectedItem("<Seleccione>");
 	    spnPeso.setValue(1);
+	    spnTiempo.setValue(1);
 	}
 }

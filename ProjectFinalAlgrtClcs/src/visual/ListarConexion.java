@@ -64,7 +64,7 @@ public class ListarConexion extends JDialog {
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{	
 					model = new DefaultTableModel();
-			        String[] header = {"Código", "Ubicación 1", "Ubicación 2", "Peso"};
+			        String[] header = {"Código", "Ubicación 1", "Ubicación 2", "Peso", "Tiempo Rec."};
 			        model.setColumnIdentifiers(header);
 			        
 					table = new JTable();
@@ -153,6 +153,7 @@ public class ListarConexion extends JDialog {
 			rows[1] = arista.getUbicacionOrigen().getNombreUbicacion();
 			rows[2] = arista.getUbicacionDestino().getNombreUbicacion();
 			rows[3] = arista.getPeso();
+			rows[4] = arista.getTiempo() + " mins";
 			model.addRow(rows);
 		}
 		table.clearSelection();

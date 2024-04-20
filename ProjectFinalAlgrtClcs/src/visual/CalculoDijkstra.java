@@ -156,7 +156,11 @@ public class CalculoDijkstra extends JDialog {
 							
 							for (int i = 0; i < distancias.length; i++) {
 								String nodoDestino = Grafo.getInstance().getMisNodos().get(i).getNombreUbicacion();
-								resultado.append(String.format(" %-15s\t%3d km\n", nodoDestino, distancias[i]));
+								if (distancias[i] == Integer.MAX_VALUE) {
+									resultado.append(String.format(" %-15s\t%3s\n", nodoDestino, "  INF"));
+								} else {
+									resultado.append(String.format(" %-15s\t%3d km\n", nodoDestino, distancias[i]));
+								}
 							}
 							
 						} else if(rdbtnEspcf.isSelected() && destino != null){
@@ -166,7 +170,11 @@ public class CalculoDijkstra extends JDialog {
 							int destinoIndex = Grafo.getInstance().buscarIndexByNombre(destino);
 							
 			                if (destinoIndex != -1) {
-			                	resultado.append(String.format(" %-15s\t%3d km\n", destino, distancias[destinoIndex]));
+			                	if (distancias[destinoIndex] == Integer.MAX_VALUE) {
+			                		resultado.append(String.format(" %-15s\t%3s\n", destino, "   INF"));
+			                	} else {
+			                		resultado.append(String.format(" %-15s\t%3d km\n", destino, distancias[destinoIndex]));
+			                	}
 			                }
 							
 						} else {

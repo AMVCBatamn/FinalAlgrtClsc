@@ -42,6 +42,7 @@ public class AgregarConexion extends JDialog {
 	private JTable table;
 	private DefaultTableModel model;
 	private static Object[] rows;
+	private JSpinner spnTiempo;
 
 	/**
 	 * Launch the application.
@@ -74,7 +75,7 @@ public class AgregarConexion extends JDialog {
 			panel.setLayout(null);
 			
 			JLabel lblOrigen = new JLabel("Origen:");
-			lblOrigen.setBounds(43, 36, 58, 14);
+			lblOrigen.setBounds(34, 39, 58, 14);
 			panel.add(lblOrigen);
 			
 			cbxOrigen = new JComboBox();
@@ -85,17 +86,17 @@ public class AgregarConexion extends JDialog {
 				}
 			});
 			cbxOrigen.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-			cbxOrigen.setBounds(111, 33, 170, 20);
+			cbxOrigen.setBounds(87, 36, 145, 20);
 			panel.add(cbxOrigen);
 			
 			JLabel lblNewLabel = new JLabel("Peso:");
-			lblNewLabel.setBounds(357, 36, 46, 14);
+			lblNewLabel.setBounds(328, 39, 46, 14);
 			panel.add(lblNewLabel);
 			
 			spnPeso = new JSpinner();
 			spnPeso.setEnabled(false);
 			spnPeso.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-			spnPeso.setBounds(413, 33, 170, 20);
+			spnPeso.setBounds(371, 36, 84, 20);
 			panel.add(spnPeso);
 			
 			JPanel panel_1 = new JPanel();
@@ -127,20 +128,35 @@ public class AgregarConexion extends JDialog {
 							
 							spnPeso.setEnabled(true);
 			                spnPeso.setValue(0);
+			                spnTiempo.setEnabled(true);
+			                spnTiempo.setValue(0);
 			                
 						} else {
 							
 							spnPeso.setEnabled(true);
 							spnPeso.setValue(1);
+							spnTiempo.setEnabled(true);
+			                spnTiempo.setValue(1);
 						}
 						
 					} else {
 						
 						spnPeso.setEnabled(false);
+						spnTiempo.setEnabled(false);
 					}
 				}
 			});
 			scrollPane.setViewportView(table);
+			
+			JLabel lblNewLabel_1 = new JLabel("Tiempo:");
+			lblNewLabel_1.setBounds(488, 39, 58, 14);
+			panel.add(lblNewLabel_1);
+			
+			spnTiempo = new JSpinner();
+			spnTiempo.setEnabled(false);
+			spnTiempo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spnTiempo.setBounds(540, 36, 84, 20);
+			panel.add(spnTiempo);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -244,14 +260,21 @@ public class AgregarConexion extends JDialog {
 		
 		String origen = (String) cbxOrigen.getSelectedItem();
 	    int peso = (int) spnPeso.getValue();
+	    int tiempo = (int) spnTiempo.getValue();
 	    
 	    if (cbxOrigen.getSelectedIndex() == -1 || table.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una opción válida.", "Agregar Conexión", JOptionPane.WARNING_MESSAGE);
             
 	    } else {
-
-	    	//Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso);
-	    	//Grafo.getInstance().insertarArista(temp);
+	    	
+	    	if (origen.equalsIgnoreCase(table.getValueAt(table.getSelectedRow(), 1).toString())) {
+	    		peso = 0;
+	    		tiempo = 0;
+	    	}
+	    	
+	    	Arista temp = new Arista(Grafo.getInstance().buscarNodoByNombre(origen), Grafo.getInstance().buscarNodoByNombre(table.getValueAt(table.getSelectedRow(), 1).toString()), peso, tiempo);
+	    	Grafo.getInstance().insertarArista(temp);
+	    	JOptionPane.showMessageDialog(null, "Conexión agregada correctamente.", "Agregar Conexión", JOptionPane.INFORMATION_MESSAGE);
 	    	clean();
 	    }
 	    actualizarTabla();
@@ -261,6 +284,8 @@ public class AgregarConexion extends JDialog {
 		cbxOrigen.setSelectedIndex(0);
 		spnPeso.setEnabled(false);
 		spnPeso.setValue(1);
+		spnTiempo.setEnabled(false);
+		spnTiempo.setValue(1);
 		table.clearSelection();
 	}
 }

@@ -85,7 +85,7 @@ public class Menu extends JFrame {
         JMenu mnNewMenu = new JMenu("Gestión de Ubicaciones");
         menuBar.add(mnNewMenu);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("Agregar Ubicacion");
+        JMenuItem mntmNewMenuItem = new JMenuItem("Agregar Ubicación");
         mntmNewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AgregarUbicacion agregarnodo = new AgregarUbicacion();
@@ -97,7 +97,7 @@ public class Menu extends JFrame {
 
         mnNewMenu.add(mntmNewMenuItem);
 
-        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listar Ubicacion");
+        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listar Ubicaciones");
         mntmNewMenuItem_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ListarUbicaciones listnodo = new ListarUbicaciones();
@@ -136,10 +136,10 @@ public class Menu extends JFrame {
         });
         mnNewMenu_3.add(mntmNewMenuItem_10);
 
-        JMenu mnNewMenu_1 = new JMenu("Calculo de ruta");
+        JMenu mnNewMenu_1 = new JMenu(" Cálculo de ruta");
         menuBar.add(mnNewMenu_1);
 
-        JMenuItem mntmNewMenuItem_3 = new JMenuItem("Dijkstra");
+        JMenuItem mntmNewMenuItem_3 = new JMenuItem("Cálculo Dijkstra");
         mntmNewMenuItem_3.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -154,26 +154,20 @@ public class Menu extends JFrame {
         });
         mnNewMenu_1.add(mntmNewMenuItem_3);
 
-        JMenuItem mntmNewMenuItem_5 = new JMenuItem("Prim");
+        JMenuItem mntmNewMenuItem_5 = new JMenuItem("Cálculo Prim");
         mnNewMenu_1.add(mntmNewMenuItem_5);
         
-        JMenuItem mntmNewMenuItem_4 = new JMenuItem("Kruskal");
+        JMenuItem mntmNewMenuItem_4 = new JMenuItem("Cálculo  Kruskal");
         mnNewMenu_1.add(mntmNewMenuItem_4);
 
         JMenu mnNewMenu_2 = new JMenu("Optimizacion de Rutas");
         menuBar.add(mnNewMenu_2);
         
-        JMenuItem mntmNewMenuItem_2 = new JMenuItem("Floyd-Warshall");
+        JMenuItem mntmNewMenuItem_2 = new JMenuItem("Cálculo Floyd-Warshall");
         mnNewMenu_2.add(mntmNewMenuItem_2);
 
-        JMenuItem mntmNewMenuItem_6 = new JMenuItem("Agregar Ruta");
+        JMenuItem mntmNewMenuItem_6 = new JMenuItem("Planificación de Ruta");
         mnNewMenu_2.add(mntmNewMenuItem_6);
-
-        JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listar Ruta");
-        mnNewMenu_2.add(mntmNewMenuItem_7);
-
-        JMenuItem mntmNewMenuItem_8 = new JMenuItem("Modificar Ruta");
-        mnNewMenu_2.add(mntmNewMenuItem_8);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
