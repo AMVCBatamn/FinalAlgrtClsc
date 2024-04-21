@@ -50,6 +50,7 @@ public class ModificarConexion extends JDialog {
 	 * @param selected 
 	 */
 	public ModificarConexion(Arista selected) {
+		setResizable(false);
 		
 		arista = selected;
 		
@@ -148,7 +149,7 @@ public class ModificarConexion extends JDialog {
 							nuevoArista.setCodigo(codigo);
 							int index = Grafo.getInstance().buscarAristaIndexByCodigo(codigo);
 							
-							if (Grafo.getInstance().existeArista(origen, destino)) {
+							if (Grafo.getInstance().existeArista(origen, destino, peso)) {
 								
 								JOptionPane.showMessageDialog(null, "La conexión ya existe en el grafo. Por favor, elija otra.", "Error", JOptionPane.ERROR_MESSAGE);
 								

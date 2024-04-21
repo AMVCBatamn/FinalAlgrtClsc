@@ -136,6 +136,5 @@ public class VerGrafo extends JDialog {
 	    panel.add(panelGrafo, BorderLayout.CENTER);
 	    panel.revalidate();
 	    panel.repaint();
-	
 	}
 }

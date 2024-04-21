@@ -48,7 +48,7 @@ public class DetallesMtx extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        matrizAdyacencia = grafo.calcularFloydWarchall();
+        matrizAdyacencia = grafo.generarMatrizAdyacencia();
 
         model = new DefaultTableModel(matrizAdyacencia.length, matrizAdyacencia[0].length);
         for (int i = 0; i < matrizAdyacencia.length; i++) {

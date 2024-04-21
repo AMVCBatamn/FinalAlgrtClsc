@@ -12,20 +12,24 @@ public class Main {
 		Nodo A = new Nodo(10, "Moca", 10.5, 20.3);
 		Nodo B = new Nodo(23, "La Vega", 15.2, 25.7);
 		Nodo C = new Nodo(13, "Santiago", 20.8, 30.1);
+		Nodo D = new Nodo(14, "Azua", 10.28, 30.1);
 		
 		grafo.insertarNodo(A);
 		grafo.insertarNodo(B);
 		grafo.insertarNodo(C);
+		grafo.insertarNodo(D);
 		
 		Arista arista1 = new Arista(A, B, 5, 23);
 		Arista arista2 = new Arista(B, C, 8, 10);
-		//Arista arista3 = new Arista(A, C, 1);
+		Arista arista3 = new Arista(A, C, 1, 30);
+		Arista arista4 = new Arista(D, A, 3, 40);
 		
 		///PROBANDO LOS METODOS:
 		
 		grafo.insertarArista(arista1);
 		grafo.insertarArista(arista2);
-		//grafo.insertarArista(arista3);
+		grafo.insertarArista(arista3);
+		grafo.insertarArista(arista4);
 		
 		
 		// Calcular y mostrar resultados de Dijkstra

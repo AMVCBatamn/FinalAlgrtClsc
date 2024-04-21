@@ -8,9 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.QuadCurve2D;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -151,6 +149,6 @@ public class DibujarGrafo extends JPanel {
             
             g2d.drawString(nodo.getNombreUbicacion(),ajusteX,ajusteY);
         }
-    }
+    }	
 }
 

@@ -1,14 +1,16 @@
 package logico;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Grafo {
-	//
+	
 	private ArrayList<Nodo> misNodos;
 	private ArrayList<Arista> misAristas;
 	private static Grafo grafo = null;
+	private static Grafo mst = null;
 	
 	public Grafo() {
 		super();
@@ -22,6 +24,44 @@ public class Grafo {
 		}
 		return grafo;
 	}
+	
+	public static Grafo getInstanceMST() {
+		if (mst == null) {
+			mst = new Grafo();
+		}
+		return mst;
+	}
+	
+	public static void generarMST(ArrayList<Arista> misAristas) {
+		
+		mst.misNodos = new ArrayList<>();
+		mst.misAristas = new ArrayList<>();
+		
+		ArrayList<Nodo> nodosUnicos = new ArrayList<Nodo>();
+		
+		for (Arista arista : misAristas) {
+			
+			Nodo origen = arista.getUbicacionOrigen();
+			Nodo destino = arista.getUbicacionDestino();
+			
+			if (!nodosUnicos.contains(origen)) {
+				nodosUnicos.add(origen);
+			}
+			
+			if (!nodosUnicos.contains(destino)) {
+				nodosUnicos.add(destino);
+			}
+		}
+		
+		mst.misNodos.addAll(nodosUnicos);
+		mst.misAristas.addAll(misAristas);
+		
+		System.out.println("Nodos únicos:");
+        for (Nodo nodo : nodosUnicos) {
+            System.out.println(nodo.getNombreUbicacion());
+        }
+	}
+	
 	
 	public ArrayList<Nodo> getMisNodos() {
 		return misNodos;
@@ -192,13 +232,13 @@ public class Grafo {
 		return index;
 	}
 	
-	public boolean existeArista(String origen, String destino) {
+	public boolean existeArista(String origen, String destino, int peso) {
 		
 		boolean existe = false;
 		
 		for (Arista arista : misAristas) {
-	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino)) ||
-	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen))) {
+	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino)) && arista.getPeso() == peso||
+	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getPeso() == peso)) {
 	            existe = true;
 	        }
 	    }
@@ -349,58 +389,55 @@ public class Grafo {
 	
 	public ArrayList<Arista> calcularPrim(){
 		
-		ArrayList<Arista> aristasPrim = new ArrayList<>();
-		boolean [] visitados = new boolean[misNodos.size()];
-		int [] minPesos = new int[misNodos.size()];
-		
-		int [] padres = new int [misNodos.size()];
+		int numN = misNodos.size();
+		int numA = 0;
+		int [][] matrizAdyacencia = generarMatrizAdyacencia();
+		boolean [] visitados = new boolean[numN];
 		
 		for (int i = 0; i < misNodos.size(); i++) {
-			minPesos[i] = Integer.MAX_VALUE;
+			visitados[i] = false;
 	    }
 		
-		minPesos[0] = 0;
-		padres[0] = -1;
+		ArrayList<Arista> aristasPrim = new ArrayList<Arista>();
 		
-		for (int i = 0; i < misNodos.size()-1; i++) {
+		visitados[0] = true;
+		
+		while ( numA < numN - 1) {
 			
-			int u = minimoPeso(minPesos,visitados);
-			visitados[u] = true;
+			int [] minArista = buscarMinArista(matrizAdyacencia,visitados);
 			
-			for (Arista arista : misNodos.get(u).getMisAristas()) {
+			int origen = minArista[0];
+			int destino = minArista[1];
+			int peso = minArista[2]; 
+			
+			visitados[destino] = true;
+			aristasPrim.add(new Arista(misNodos.get(origen), misNodos.get(destino), peso, 0));
+			numA++;
+		}
+		return aristasPrim;
+	}
+	
+	private int[] buscarMinArista(int[][] matrizAdyacencia, boolean[] visitados) {
+		
+		int numN = matrizAdyacencia.length;
+		int[] minArista = new int[]{0, 0, Integer.MAX_VALUE};
+		
+		for (int i = 0; i < numN; i++) {
+			
+			if(visitados[i]) {
 				
-				int v = misNodos.indexOf(arista.getUbicacionDestino());
-				int miPeso = arista.getPeso();
-				
-				if (!visitados[v] && miPeso < minPesos[v]) {
-					padres[u] = v;
-					minPesos[v] = miPeso;
+				for (int j = 0; j < numN; j++) {
+					
+					if (!visitados[j] && matrizAdyacencia[i][j] != 0 && matrizAdyacencia[i][j] < minArista[2]) {
+						minArista = new int[]{i, j, matrizAdyacencia[i][j]};
+                    }
 				}
 			}
 		}
 		
-		for (int i = 1; i < misNodos.size(); i++) {
-			aristasPrim.add(new Arista(misNodos.get(i), misNodos.get(padres[i]), minPesos[i],0));
-		}
-
-		return aristasPrim;
+		return minArista;
 	}
 
-	private int minimoPeso(int[] minPesos, boolean[] visitados) {
-		
-		int minimo = Integer.MAX_VALUE;
-	    int minIndex = -1;
-	    
-	    for (int i = 0; i < minPesos.length; i++) {
-	        if (!visitados[i] && minPesos[i] < minimo) {
-	            minimo = minPesos[i];
-	            minIndex = i;
-	        }
-	    }
-	    
-	    return minIndex;
-	}
-	
 	public void imprimirAristasPrim(ArrayList<Arista> aristasPrim) {
 	    
 		int total = 0;
@@ -419,7 +456,6 @@ public class Grafo {
 	    
 	    System.out.println("\nCosto total del árbol de expansión mínima: " + total);
 	}
-	
 	
 	//METODOS FLOYD WARSHALL//
 	

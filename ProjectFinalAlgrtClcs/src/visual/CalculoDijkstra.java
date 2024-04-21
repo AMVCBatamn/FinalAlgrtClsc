@@ -53,6 +53,7 @@ public class CalculoDijkstra extends JDialog {
 	 * Create the dialog.
 	 */
 	public CalculoDijkstra() {
+		setResizable(false);
 		setTitle("Cálculo Dijkstra");
 		setBounds(100, 100, 625, 380);
 		setLocationRelativeTo(null);
@@ -135,7 +136,7 @@ public class CalculoDijkstra extends JDialog {
 				JButton okButton = new JButton("Calcular");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+					
 						String origen = (String) cbxOrigen.getSelectedItem();
 						String destino = (String) cbxDestino.getSelectedItem();
 						
