@@ -155,9 +155,32 @@ public class Menu extends JFrame {
         mnNewMenu_1.add(mntmNewMenuItem_3);
 
         JMenuItem mntmNewMenuItem_5 = new JMenuItem("Cálculo Prim");
+        mntmNewMenuItem_5.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		if (Grafo.getInstance() == null || Grafo.getInstance().getMisNodos().size() == 0 || Grafo.getInstance().getMisAristas().size() == 0) { 
+        			JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE); 
+        		} else {
+            		CalculoPrim calcuprim = new CalculoPrim();
+            		calcuprim.setVisible(true);	
+        		}
+        	}
+        });
         mnNewMenu_1.add(mntmNewMenuItem_5);
         
         JMenuItem mntmNewMenuItem_4 = new JMenuItem("Cálculo  Kruskal");
+        mntmNewMenuItem_4.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		if (Grafo.getInstance() == null || Grafo.getInstance().getMisNodos().size() == 0 || Grafo.getInstance().getMisAristas().size() == 0) { 
+        			JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE); 
+        		} else {
+            		CalculoKruskal calcukrus = new CalculoKruskal();
+            		calcukrus.setModal(true);
+            		calcukrus.setVisible(true);	
+        		}
+        	}
+        });
         mnNewMenu_1.add(mntmNewMenuItem_4);
 
         JMenu mnNewMenu_2 = new JMenu("Optimizacion de Rutas");

@@ -164,13 +164,13 @@ public class CalculoPrim extends JFrame {
 	    JPrim.setTitle("Grafo de Prim");
 	    JPrim.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    JPrim.setModal(true);
-	    JPrim.setVisible(true);
 	    JPrim.getContentPane().add(dibujo, BorderLayout.CENTER);
 
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    JPrim.setBounds(0, 0, (screenSize.width + 400) / 2, (screenSize.height + 600) / 2);
-
+	    
 	    JPrim.setLocationRelativeTo(null);
+	    JPrim.setVisible(true);
 	    JPrim.setResizable(false);
 	}
 }

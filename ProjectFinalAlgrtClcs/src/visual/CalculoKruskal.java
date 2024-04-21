@@ -7,10 +7,28 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import logico.Arista;
+import logico.Grafo;
+
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.Toolkit;
 
 public class CalculoKruskal extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -29,29 +47,128 @@ public class CalculoKruskal extends JDialog {
 	 * Create the dialog.
 	 */
 	public CalculoKruskal() {
-		setTitle("Cálculo Kruskal");
 		setResizable(false);
-		setBounds(100, 100, 450, 300);
+		setTitle("Cálculo Kruskal");
+		setBounds(100, 100, 750, 528);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		{
+			JPanel panel = new JPanel();
+			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(panel, BorderLayout.CENTER);
+			panel.setLayout(null);
+			{
+				JLabel label = new JLabel("Resultados:");
+				label.setBounds(64, 14, 75, 14);
+				panel.add(label);
+			}
+			{
+				JLabel lblVerGrafoDe = new JLabel("Ver Grafo de Kruskal?");
+				lblVerGrafoDe.setBounds(556, 59, 133, 14);
+				panel.add(lblVerGrafoDe);
+			}
+			{
+				JPanel panel_1 = new JPanel();
+				panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel_1.setBounds(64, 42, 442, 385);
+				panel.add(panel_1);
+				panel_1.setLayout(new BorderLayout(0, 0));
+				{
+					JScrollPane scrollPane = new JScrollPane((Component) null);
+					panel_1.add(scrollPane, BorderLayout.CENTER);
+					
+					textArea = new JTextArea();
+					textArea.setEditable(false);
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 14));
+					scrollPane.setViewportView(textArea);
+				}
+			}
+			{
+				JButton btnSi = new JButton("Sí");
+				btnSi.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						if (Grafo.getInstance().getMisAristas().size() == 0) {
+							JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Creación de Grafo Virtual", JOptionPane.ERROR_MESSAGE);
+						} else {
+							loadGrafo();
+						}
+					}
+				});
+				btnSi.setBounds(556, 84, 117, 23);
+				panel.add(btnSi);
+			}
+		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JButton btnGenerar = new JButton("Generar");
+				btnGenerar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						if (Grafo.getInstance().getMisAristas().size() == 0) {
+							JOptionPane.showMessageDialog(null, "Información no disponible aún !!!", "Error de Cálculo de Kruskal", JOptionPane.ERROR_MESSAGE);
+						} else {
+							loadResultados();	
+						}
+					}
+				});
+				btnGenerar.setActionCommand("OK");
+				buttonPane.add(btnGenerar);
+				getRootPane().setDefaultButton(btnGenerar);
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}
 		}
 	}
+	
+	private void loadResultados() {
+		
+		ArrayList<Arista> aristaKruskal = Grafo.getInstance().calcularKruskal(); 
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(" Árbol de Expansión Mínima vía Kruskal:\n\n");
+		sb.append(String.format(" %-25s | %-10s\n", "Conexión:", "Distancia:"));
+	
+		for (Arista arista : aristaKruskal) {
+			sb.append(String.format(" %-25s | %-10s\n", "["+arista.getUbicacionOrigen().getNombreUbicacion() + "," + arista.getUbicacionDestino().getNombreUbicacion()+"]", arista.getPeso()));
+		}
+		textArea.setText(sb.toString());
+	}
+	
+	private void loadGrafo() {
+		
+		ArrayList<Arista> aristaKruskal = Grafo.getInstance().calcularKruskal();
+		Grafo.getInstanceMST();
+		Grafo.generarMST(aristaKruskal);
+		
+	    DibujarGrafo dibujo = new DibujarGrafo(Grafo.getInstanceMST(), true);
+	   
+	    
+	    JDialog JPrim = new JDialog();
+	    JPrim.setTitle("Grafo de Kruskal");
+	    JPrim.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	    JPrim.setModal(true);
+	    JPrim.getContentPane().add(dibujo, BorderLayout.CENTER);
 
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    JPrim.setBounds(0, 0, (screenSize.width + 400) / 2, (screenSize.height + 600) / 2);
+
+	    JPrim.setLocationRelativeTo(null);
+	    JPrim.setVisible(true);
+	    JPrim.setResizable(false);
+	}
 }
