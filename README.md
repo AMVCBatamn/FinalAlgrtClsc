@@ -1,12 +1,11 @@
-#Experiencias con el proyecto
+# Experiencias con el proyecto
 
-A pesar de que se logró toda la parte lógica y el funcionamiento del programa fue óptimo mediante el uso de la consola, decidimos dar 
-un salto más y hacer la parte visual al mismo tiempo, para que el usuario se sienta mucho más cómodo.
+Si bien logramos implementar toda la lógica del programa y su funcionamiento fue óptimo a través de la consola, decidimos dar un paso más allá y desarrollar la interfaz gráfica de usuario simultáneamente, con el fin de brindar una experiencia más cómoda e intuitiva para el usuario.
 
 
 # Sistema de Gestión de Rutas
 
-Este proyecto es un sistema de gestión de rutas que permite calcular diferentes aspectos de las rutas entre ubicaciones.
+Este proyecto es un sistema de gestión de rutas que permite calcular diferentes aspectos de las rutas entre ubicaciones. Ofrece funcionalidades para agregar, editar y eliminar ubicaciones, así como encontrar rutas óptimas utilizando algoritmos de grafos.
 
 ## Instalación
 
@@ -19,9 +18,11 @@ Este proyecto es un sistema de gestión de rutas que permite calcular diferentes
 
 El sistema permite:
 
-- Insertar y eliminar nodos y aristas.
+- Insertar y eliminar nodos (ubicaciones) y aristas (conexiones).
 - Calcular rutas mínimas utilizando los algoritmos de Dijkstra, Kruskal, Prim y Floyd-Warshall.
 - Ver la distancia o el tiempo de las rutas.
+- Visualizar la matriz de adyacencia del grafo.
+- Obtener una representación básica del grafo.
 
 ## Licencia
 
@@ -39,15 +40,15 @@ THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRI
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR 
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-##Documentación:
+## Documentación:
 
--Clase: Grafo.java
--Clase: Nodo.java
--Clase: Nodo.java
+- Clase: Grafo.java
+- Clase: Nodo.java
+- Clase: Nodo.java
 
 
 Aquí se puede probar el funcionamiento del proyecto de manera lógica:
--Clase: Main.java
+- Clase: Main.java
 
 
 
