@@ -1,7 +1,7 @@
 #Experiencias con el proyecto
 
 A pesar de que se logró toda la parte lógica y el funcionamiento del programa fue óptimo mediante el uso de la consola, decidimos dar 
-un salto más y hacer la parte visual al mismo tiempo, para que el usuario se sienta mucho cómodo.
+un salto más y hacer la parte visual al mismo tiempo, para que el usuario se sienta mucho más cómodo.
 
 
 # Sistema de Gestión de Rutas
