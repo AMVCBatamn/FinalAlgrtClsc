@@ -1,5 +1,4 @@
 # Índice:
-## Contenido de este Archivo:
 
 * Experiencias con el proyecto
 * Sistema de Gestión de Rutas
