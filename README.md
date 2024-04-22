@@ -44,7 +44,7 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 - Clase: Grafo.java
 - Clase: Nodo.java
-- Clase: Nodo.java
+- Clase: Arista.java
 
 
 Aquí se puede probar el funcionamiento del proyecto de manera lógica:
