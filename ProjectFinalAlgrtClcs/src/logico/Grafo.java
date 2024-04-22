@@ -25,6 +25,15 @@ public class Grafo {
 		return grafo;
 	}
 	
+	  /**
+      Método: getInstanceMST
+      
+     Objetivo: Obtener la instancia única del árbol de expansión mínima (Minimum Spanning Tree).
+      
+     Retorno:
+     Grafo: Instancia única del árbol de expansión mínima.
+     */
+	
 	public static Grafo getInstanceMST() {
 		if (mst == null) {
 			mst = new Grafo();
@@ -32,6 +41,17 @@ public class Grafo {
 		return mst;
 	}
 	
+	  /**
+      Método: generarMST
+      
+      Objetivo: Generar el árbol de expansión mínima (Minimum Spanning Tree) a partir de un conjunto
+      de aristas dado.
+      
+      Argumentos:
+        misAristas: ArrayList de aristas.
+     
+      Retorno: Ninguno
+     */
 	public static void generarMST(ArrayList<Arista> misAristas) {
 		
 		mst.misNodos = new ArrayList<>();
@@ -84,6 +104,16 @@ public class Grafo {
 		misNodos.add(nodo);
 	}
 	
+	   /**
+      Método: eliminarNodo
+      
+      Objetivo: Eliminar un nodo del grafo, junto con todas las aristas asociadas a él.
+      
+      Argumentos:
+        nodo: Nodo a eliminar.
+      
+      Retorno: Ninguno
+     */
 	public void eliminarNodo(Nodo nodo) {
 		
 		ArrayList<Arista> tempAristas = new ArrayList<Arista>(nodo.getMisAristas());
@@ -101,24 +131,67 @@ public class Grafo {
 		misNodos.remove(nodo);
 	}
 	
+	   /**
+      Método: actualizarNodo
+      
+      Objetivo: Actualizar la información de un nodo en el grafo.
+      
+      Argumentos:
+        nodo: Nodo a actualizar.
+        nombre: Nuevo nombre del nodo.
+        longuitud: Nueva longitud del nodo.
+        latitud: Nueva latitud del nodo.
+      
+      Retorno: Ninguno
+     */
 	public void actualizarNodo(Nodo nodo, String nombre, double longuitud, double latitud) {
 		nodo.setNombreUbicacion(nombre);
 	    nodo.setLonguitud(longuitud);
 	    nodo.setLatitud(latitud);
 	}
 	
+    /**
+      Método: insertarArista
+      
+      Objetivo: Insertar una arista en el grafo.
+      
+      Argumentos:
+        arista: Arista a insertar.
+      
+      Retorno: Ninguno
+     */
 	public void insertarArista(Arista arista) {
 		arista.getUbicacionOrigen().insertarArista(arista);
 	    arista.getUbicacionDestino().insertarArista(arista);
 		misAristas.add(arista);
 	}
 	
+	
+    /**
+      Método: eliminarArista
+      
+      Objetivo: Eliminar una arista del grafo.
+      
+      Argumentos:
+      arista: Arista a eliminar.
+      
+      Retorno: Ninguno
+     */
 	public void eliminarArista(Arista arista) {
 		arista.getUbicacionOrigen().eliminarArista(arista);
 		arista.getUbicacionDestino().eliminarArista(arista);
 		misAristas.remove(arista);
 	}
 	
+	
+    /**
+      Método: generarMatrizAdyacencia
+      
+      Objetivo: Generar una matriz de adyacencia a partir del grafo.
+      
+      Retorno:
+        int[][]: Matriz de adyacencia generada.
+     */
 	
 	public int [][] generarMatrizAdyacencia(){
 		
@@ -141,6 +214,16 @@ public class Grafo {
 	    return matrizAdyacencia;
 	}
 	
+    /**
+      Método: imprimirMatrizAdyacencia
+      
+      Objetivo: Imprimir la matriz de adyacencia en la consola.
+      
+      Argumentos:
+        matriz: Matriz de adyacencia a imprimir.
+      
+      Retorno: Ninguno
+     */
 	public void imprimirMatrizAdyacencia(int[][] matriz) {
 	    
 		int filas = matriz.length;
@@ -170,6 +253,18 @@ public class Grafo {
 	    }
 	}
 	
+    /**
+      Método: buscarNodoByNombre
+      
+      Objetivo: Buscar un nodo por su nombre en el grafo.
+      
+      Argumentos:
+       nombre: Nombre del nodo a buscar.
+      
+      Retorno:
+      Nodo: Nodo encontrado o null si no se encuentra.
+     */
+	
 	public Nodo buscarNodoByNombre(String nombre) {
 	    
 		Nodo aux = null;
@@ -186,6 +281,18 @@ public class Grafo {
 	    return aux;
 	}
 	
+	
+    /**
+      Método: buscarIndexByNombre
+      
+      Objetivo: Buscar el índice de un nodo por su nombre en el grafo.
+      
+      Argumentos:
+        nombre: Nombre del nodo a buscar.
+      
+      Retorno:
+        int: Índice del nodo encontrado o -1 si no se encuentra.
+     */
 	public int buscarIndexByNombre(String nombre) {
 		
 		int index = -1;
@@ -203,6 +310,17 @@ public class Grafo {
 		return index;
 	}
 	
+    /**
+      Método: buscarAristaByCodigo
+      
+      Objetivo: Buscar una arista por su código en el grafo.
+      
+      Argumentos:
+        codigo: Código de la arista a buscar.
+      
+      Retorno:
+        Arista: Arista encontrada o null si no se encuentra.
+     */
 	public Arista buscarAristaByCodigo(String codigo) {
 		
 		Arista aux = null;
@@ -220,6 +338,17 @@ public class Grafo {
 		return aux;
 	}
 	
+	 /**
+      Método: buscarAristaIndexByCodigo
+      
+      Objetivo: Buscar el índice de una arista por su código en el grafo.
+      
+      Argumentos:
+        codigo: Código de la arista a buscar.
+      
+      Retorno:
+        int: Índice de la arista encontrada o -1 si no se encuentra.
+     */
 	public int buscarAristaIndexByCodigo(int codigo) {
 		
 		int index = -1;
@@ -237,6 +366,21 @@ public class Grafo {
 		return index;
 	}
 	
+    /**
+      Método: existeArista
+      
+      Objetivo: Verificar si existe una arista entre dos nodos dados en el grafo.
+      
+      Argumentos:
+        origen: Nombre del nodo origen.
+        destino: Nombre del nodo destino.
+        peso: Peso de la arista.
+        tiempo: Tiempo de la arista.
+      
+      Retorno:
+        boolean: true si la arista existe, false en caso contrario.
+     */
+	
 	public boolean existeArista(String origen, String destino, int peso, int tiempo) {
 		
 		boolean existe = false;
@@ -250,10 +394,33 @@ public class Grafo {
 	    return existe;
 	}
 	
+	 /**
+      Método: actualizarArista
+      
+      Objetivo: Actualizar una arista en el grafo.
+      
+      Argumentos:
+        index: Índice de la arista a actualizar.
+        nuevoArista: Arista actualizada.
+      
+      Retorno: Ninguno
+     */
 	public void actualizarArista(int index, Arista nuevoArista) {
 		misAristas.set(index, nuevoArista);
 	}
 	
+	
+    /**
+      Método: obtenerNombreMasLargo
+      
+      Objetivo: Obtener el largo del nombre más largo entre los nodos del grafo.
+      
+      Argumentos:
+        miGrafo: Grafo del cual se quiere obtener el nombre más largo.
+      
+      Retorno:
+        int: Largo del nombre más largo.
+     */
 	public int obtnerNombreMasLargo(Grafo miGrafo) {
 		int maxLength = 0;
 		for (Nodo nodo : miGrafo.misNodos) {
@@ -265,7 +432,20 @@ public class Grafo {
 		return maxLength;
 	}
 	
-	//METODOS DIJKSTRA//
+   // METODOS DIJKSTRA//
+    
+    /**
+      Método: calcularDijkstra
+      
+      Objetivo: Calcular la ruta más corta entre un nodo origen y los demás nodos utilizando el algoritmo de Dijkstra.
+     
+      Argumentos:
+        matrizAdyacencia: Matriz de adyacencia del grafo.
+        origen: Índice del nodo origen.
+      
+      Retorno:
+        int[]: Distancias mínimas desde el nodo origen a los demás nodos.
+     */
 	
     public int[] calcularDijkstra(int matrizAdyacencia[][], int origen)  {
     	
@@ -292,6 +472,18 @@ public class Grafo {
         return distancia;
     }
     
+    /**
+      Método: minimaDistancia
+      
+      Objetivo: Encontrar el nodo con la distancia mínima que no ha sido visitado.
+      
+      Argumentos:
+        distancia: Arreglo de distancias a los nodos.
+        visitado: Arreglo de booleanos que indica si un nodo ha sido visitado o no.
+      
+      Retorno:
+        int: Índice del nodo con distancia mínima.
+     */
 	private int minimaDistancia(int[] distancia, boolean[] visitado) {
 		
 		int min = Integer.MAX_VALUE;
@@ -306,6 +498,18 @@ public class Grafo {
 		return min_index;
 	}
     
+	
+    /**
+      Método: imprimirResultadosDijkstra
+      
+      Objetivo: Imprimir los resultados del algoritmo de Dijkstra en la consola.
+      
+      Argumentos:
+       distancia: Arreglo de distancias mínimas desde el nodo origen a los demás nodos.
+        ubicacion: Nombre del nodo origen.
+      
+      Retorno: Ninguno
+     */
 	public void imprimirResultadosDijkstra(int distancia[], String ubicacion){
 		
 		String destino = "";
@@ -322,8 +526,16 @@ public class Grafo {
         }
     }
 	
-	//METODOS KRUSKAL//
-	
+    // METODOS KRUSKAL//
+    
+    /**
+      Método: calcularKruskal
+      
+      Objetivo: Calcular el árbol de expansión mínima utilizando el algoritmo de Kruskal.
+      
+      Retorno:
+        ArrayList<Arista>: Aristas que conforman el árbol de expansión mínima.
+     */	
 	public ArrayList<Arista> calcularKruskal(){
 		
 		ArrayList<Arista> aristasKruskal = new ArrayList<Arista>();
@@ -351,6 +563,19 @@ public class Grafo {
 		return aristasKruskal;	
 	}
 	
+    /**
+      Método: encontrar
+      
+      Objetivo: Encontrar el subconjunto al que pertenece un nodo.
+      
+      Argumentos:
+        padres: Arreglo que representa los padres de cada nodo.
+        i: Nodo al que se le busca el subconjunto.
+      
+      Retorno:
+        int: Subconjunto al que pertenece el nodo.
+     */
+	
 	private int encontrar(int[] padres, int nodo) {
         
 		if (padres[nodo] != nodo) {
@@ -359,6 +584,19 @@ public class Grafo {
 		
         return padres[nodo];
     }
+	
+	 /**
+      Método: unir
+      
+      Objetivo: Unir dos subconjuntos.
+      
+      Argumentos:
+       padres: Arreglo que representa los padres de cada nodo.
+       x: Subconjunto a unir.
+       y: Subconjunto a unir.
+      
+      Retorno: Ninguno
+     */
 	
 	private void unir(int[] padres, int nodo1, int nodo2) {
 		
@@ -370,7 +608,16 @@ public class Grafo {
         }
 	}
 	
-	//METODOS PRIM//
+   // METODOS PRIM//
+    
+    /**
+      Método: calcularPrim
+      
+      Objetivo: Calcular el árbol de expansión mínima utilizando el algoritmo de Prim.
+      
+      Retorno:
+        ArrayList<Arista>: Aristas que conforman el árbol de expansión mínima.
+     */	
 	
 	public ArrayList<Arista> calcularPrim(){
 		
@@ -402,6 +649,20 @@ public class Grafo {
 		return aristasPrim;
 	}
 	
+	/**
+	  Método: buscarMinArista
+	  
+	  Objetivo: Busca la arista de menor peso que conecta un nodo visitado con uno no visitado.
+	  
+	  Argumentos:
+	   matrizAdyacencia int[][]: Matriz de adyacencia que representa las conexiones entre nodos.
+	   visitados boolean[]: Arreglo que indica si un nodo ha sido visitado o no.
+	   
+	  retorno:
+	   int[]: Arreglo que contiene la información de la arista de menor peso encontrada. 
+	                El arreglo tiene la siguiente estructura: {origen, destino, peso}.
+	 */
+	
 	private int[] buscarMinArista(int[][] matrizAdyacencia, boolean[] visitados) {
 		
 		int numN = matrizAdyacencia.length;
@@ -423,8 +684,19 @@ public class Grafo {
 		return minArista;
 	}
 	
-	//METODOS FLOYD WARSHALL//
-	
+    // METODO FLOYD-WARSHALL//
+    
+    /**
+      Método: calcularFloydWarshall
+      
+      Objetivo: Calcular la matriz de distancias mínimas entre todos los pares de nodos utilizando el algoritmo de Floyd-Warshall.
+     
+      Argumentos:
+       matrizAdyacencia: Matriz de adyacencia del grafo.
+      
+      Retorno:
+        distancias mínimas.
+     */	
 	public int [][] calcularFloydWarchall(){
 		
 		int dist[][] = generarMatrizAdyacencia();
@@ -482,7 +754,13 @@ public class Grafo {
 	}
 	
 	//METODOS PLANIFICACION DE RUTA//
-	
+	/**
+	  Método: generarMatrizAdyacenciaTiempo
+	  
+	  Objetivo: Genera una matriz de adyacencia que representa las distancias entre nodos en función del tiempo de viaje.
+	  
+	  return int[][]: Matriz de adyacencia de tiempos de viaje entre nodos.
+	 */
 	public int [][] generarMatrizAdyacenciaTiempo(){
 		
 		int numN = misNodos.size();

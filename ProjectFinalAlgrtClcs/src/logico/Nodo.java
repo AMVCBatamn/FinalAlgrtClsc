@@ -12,6 +12,12 @@ public class Nodo {
 	private double latitud;
 	private static int codigoNodo = 1;
 	
+	/*
+	 * 
+	 * 
+	 * 
+	 * contructor de Nodo
+	 */
 	public Nodo(int valor, String nombreUbicacion, double longuitud, double latitud) {
 		super();
 		this.codigo = codigoNodo++;

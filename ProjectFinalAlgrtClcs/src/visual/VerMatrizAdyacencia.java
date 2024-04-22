@@ -47,9 +47,9 @@ public class VerMatrizAdyacencia extends JFrame {
       Objetivo: Constructor de la clase.
       
       Argumentos: 
-       - grafo: Grafo al que pertenece la matriz de adyacencia.
-       - habilitarPesoPanel: Booleano que indica si se habilitan los pesos en el panel.
-       - esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
+        grafo: Grafo al que pertenece la matriz de adyacencia.
+        habilitarPesoPanel: Booleano que indica si se habilitan los pesos en el panel.
+        esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
       
       Retorno: Ninguno
      */
@@ -145,8 +145,8 @@ public class VerMatrizAdyacencia extends JFrame {
       Objetivo: Genera la matriz de adyacencia en formato de objetos para su posterior visualización.
       
       Argumentos: 
-       - esPeso: Booleano que indica si se muestran los pesos en la matriz.
-       - esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
+        esPeso: Booleano que indica si se muestran los pesos en la matriz.
+        esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
       
       Retorno: Ninguno
      */
@@ -201,9 +201,9 @@ public class VerMatrizAdyacencia extends JFrame {
       Objetivo: Establece la matriz de adyacencia en la representación de objetos.
       
       Argumentos: 
-       - matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
-       - matrizAdyacencia: Matriz de adyacencia.
-       - esPeso: Booleano que indica si se muestran los pesos en la matriz.
+        matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
+        matrizAdyacencia: Matriz de adyacencia.
+        esPeso: Booleano que indica si se muestran los pesos en la matriz.
       
       Retorno: Ninguno
      */
@@ -242,7 +242,7 @@ public class VerMatrizAdyacencia extends JFrame {
       Objetivo: Establece los identificadores de filas y columnas en la matriz de adyacencia.
       
       Argumentos: 
-       - matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
+        matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
       
       Retorno: Ninguno
      */
