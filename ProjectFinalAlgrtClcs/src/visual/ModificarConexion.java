@@ -183,6 +183,16 @@ public class ModificarConexion extends JDialog {
 		loadUbicaciones();
 	}
 	
+	/*
+	  Método: loadUbicaciones
+	  
+	  Objetivo: Carga las ubicaciones en los ComboBox.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
+	
 	private void loadUbicaciones() {
 		
 		if (cbxOrigen == null || cbxDestino == null) {
@@ -207,6 +217,15 @@ public class ModificarConexion extends JDialog {
 		}
 	}
 	
+	/*
+	  Método: reloadUbicaciones
+	  
+	  Objetivo: Recarga los ComboBox de acuerdo a la selección.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	private void reloadUbicaciones() {
 		
 		String origen = (String) cbxOrigen.getSelectedItem();
@@ -222,6 +241,16 @@ public class ModificarConexion extends JDialog {
             spnTiempo.setEnabled(true);
         }
 	}
+	
+	/*
+	  Método: clean
+	  
+	  Objetivo: Limpia los campos de entrada.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	
 	private void clean() {
 		cbxOrigen.setSelectedItem("<Seleccione>");

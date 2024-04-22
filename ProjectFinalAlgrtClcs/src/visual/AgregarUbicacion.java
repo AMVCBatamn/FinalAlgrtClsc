@@ -49,8 +49,14 @@ public class AgregarUbicacion extends JDialog {
         }
     }
 
-    /**
-     * Create the dialog.
+    /*
+      Método: AgregarUbicacion
+      
+      Objetivo: Constructor de la clase AgregarUbicacion.
+      
+      Argumento: Ninguno
+     
+      Retorno: void
      */
     public AgregarUbicacion() {
     	setTitle("Agregar Ubicación");
@@ -176,6 +182,15 @@ public class AgregarUbicacion extends JDialog {
         setResizable(false);
     }
 
+    /*
+      Método: setGrafo
+      
+      Objetivo: Establece el grafo recibido como atributo de la clase.
+      
+      Argumento: Grafo grafo: Grafo a establecer.
+      
+      Retorno: void
+     */
     public void setGrafo(Grafo grafo) {
         this.grafo = grafo;
     }

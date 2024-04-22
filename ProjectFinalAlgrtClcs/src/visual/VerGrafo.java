@@ -123,6 +123,16 @@ public class VerGrafo extends JDialog {
 		loadDibujoGrafo(verPeso);
 	}
 	
+	/*
+	  Método: loadDibujoGrafo
+	  
+	  Objetivo: Carga el grafo en el panel para visualización.
+	  
+	  Argumento: boolean verPeso: Indica si se quiere visualizar el peso (true) o el tiempo (false) de las conexiones.
+	  
+	  Retorno: void
+	 */
+	
 	private void loadDibujoGrafo(boolean verPeso) {
 		
 		panel.removeAll();

@@ -137,6 +137,15 @@ public class CalculoPrim extends JDialog {
 		}
 	}
 	
+    /**
+      Método: loadResultados
+      
+      Objetivo: Carga los resultados del algoritmo de Prim en el área de texto.
+      
+      Argumentos: Ninguno
+      
+      Retorno: Ninguno
+     */
 	private void loadResultados() {
 		
 		ArrayList<Arista> aristasPrim = Grafo.getInstance().calcularPrim(); 
@@ -154,6 +163,16 @@ public class CalculoPrim extends JDialog {
 		textArea.setFont(font);
 	}
 	
+	
+    /**
+      Método: loadGrafo
+      
+      Objetivo: Carga y muestra el grafo generado por el algoritmo de Prim.
+      
+      Argumentos: Ninguno
+      
+      Retorno: Ninguno
+     */
 	private void loadGrafo() {
 		
 		ArrayList<Arista> aristasPrim = Grafo.getInstance().calcularPrim();

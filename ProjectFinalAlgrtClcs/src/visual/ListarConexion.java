@@ -147,6 +147,16 @@ public class ListarConexion extends JDialog {
 		loadConexiones();
 	}
 	
+	/*
+	  Método: loadConexiones
+	 
+	  Objetivo: Cargar la tabla con las conexiones existentes.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
+	
 	private void loadConexiones() {
 		
 		rows = new Object[model.getColumnCount()];

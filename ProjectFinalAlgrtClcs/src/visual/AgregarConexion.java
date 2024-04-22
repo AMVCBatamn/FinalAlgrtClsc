@@ -189,6 +189,16 @@ public class AgregarConexion extends JDialog {
 		actualizarTabla();
 	}
 	
+	/*
+	  Método: actualizarTabla
+	  
+	  Objetivo: Actualiza la tabla de ubicaciones desconocidas.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
+	
 	private void actualizarTabla() {
 		
 		if (Grafo.getInstance() != null && model != null && cbxOrigen.getSelectedIndex() != -1) {
@@ -214,6 +224,15 @@ public class AgregarConexion extends JDialog {
 		}
 	}
 
+	/*
+	  Método: loadDesconocidos
+	  
+	  Objetivo: Carga en un ArrayList los nodos que no están conectados al nodo de origen.
+	  
+	  Argumento: Nodo origen: Nodo del que se desea buscar las conexiones.
+	  
+	  Retorno: ArrayList<Nodo>: Lista de nodos no conectados al nodo de origen.
+	 */
 	private ArrayList<Nodo> loadDesconocidos(Nodo origen) {
 		
 		ArrayList<Nodo> desconocidos = new ArrayList<>();
@@ -228,6 +247,17 @@ public class AgregarConexion extends JDialog {
 		return desconocidos;	
 	}
 	
+	
+	/*
+	  Método: esConocido
+	  
+	  Objetivo: Verifica si una ubicación es conocida desde un nodo de origen.
+	  
+	  Argumento: String nombreUbicacion: Nombre de la ubicación a verificar.
+	             Nodo origen: Nodo desde el que se desea verificar la conexión.
+	  
+	  Retorno: boolean: true si la ubicación es conocida desde el nodo de origen, false en caso contrario.
+	 */
 	private boolean esConocido(String nombreUbicacion, Nodo origen) {
 		
 		boolean conocido = false;
@@ -243,6 +273,16 @@ public class AgregarConexion extends JDialog {
 		return conocido;
 	}
 	
+	
+	/*
+	  Método: loadUbicaciones
+	  
+	  Objetivo: Carga las ubicaciones en el ComboBox de origen.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	private void loadUbicaciones() {
 		
 		if (cbxOrigen == null ) {
@@ -256,6 +296,15 @@ public class AgregarConexion extends JDialog {
 		}
 	}
 	
+	/*
+	  Método: agregarConexion
+	  
+	  Objetivo: Agrega una nueva conexión entre dos ubicaciones al grafo.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	private void agregarConexion() {
 		
 		String origen = (String) cbxOrigen.getSelectedItem();
@@ -280,6 +329,17 @@ public class AgregarConexion extends JDialog {
 	    actualizarTabla();
 	}
 	
+	
+	
+	/*
+	  Método: clean
+	  
+	  Objetivo: Limpia los campos de la interfaz.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	private void clean() {
 		cbxOrigen.setSelectedIndex(0);
 		spnPeso.setEnabled(false);

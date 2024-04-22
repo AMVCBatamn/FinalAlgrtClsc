@@ -40,6 +40,19 @@ public class VerMatrizAdyacencia extends JFrame {
     private boolean esFloyd = false;
     private JLabel lblNewLabel_1;
     
+    
+    /**
+      Método: VerMatrizAdyacencia
+      
+      Objetivo: Constructor de la clase.
+      
+      Argumentos: 
+       - grafo: Grafo al que pertenece la matriz de adyacencia.
+       - habilitarPesoPanel: Booleano que indica si se habilitan los pesos en el panel.
+       - esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
+      
+      Retorno: Ninguno
+     */
 	public VerMatrizAdyacencia(Grafo grafo, boolean habilitarPesoPanel, boolean esFloydWarshal) {
 		
 		if (grafo == null) {		
@@ -126,6 +139,18 @@ public class VerMatrizAdyacencia extends JFrame {
 		generarMatrizObjetos(noPeso,esFloyd);
 	}
 	
+	/**
+      Método: generarMatrizObjetos
+      
+      Objetivo: Genera la matriz de adyacencia en formato de objetos para su posterior visualización.
+      
+      Argumentos: 
+       - esPeso: Booleano que indica si se muestran los pesos en la matriz.
+       - esFloydWarshal: Booleano que indica si se está utilizando el algoritmo de Floyd Warshall.
+      
+      Retorno: Ninguno
+     */
+	
 	public void generarMatrizObjetos(boolean esPeso, boolean esFloydWarshal) {
     	
     	int tam = grafo.getMisNodos().size() + 1; //Tamano de matrix mas agregado de los identificadores.
@@ -169,6 +194,19 @@ public class VerMatrizAdyacencia extends JFrame {
         }   
         table.getColumnModel().getColumn(0).setCellRenderer(justificarDerecho);
     }
+	
+    /**
+      Método: seterMatrizAdyacencia
+      
+      Objetivo: Establece la matriz de adyacencia en la representación de objetos.
+      
+      Argumentos: 
+       - matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
+       - matrizAdyacencia: Matriz de adyacencia.
+       - esPeso: Booleano que indica si se muestran los pesos en la matriz.
+      
+      Retorno: Ninguno
+     */
     
 	private void seterMatrizAdyacencia(Object[][] matrizObjetos, int[][] matrizAdyacencia, boolean esPeso) {
 		
@@ -198,6 +236,16 @@ public class VerMatrizAdyacencia extends JFrame {
 		}
 	}
 	
+	/**
+      Método: setearIdentificadores
+      
+      Objetivo: Establece los identificadores de filas y columnas en la matriz de adyacencia.
+      
+      Argumentos: 
+       - matrizObjetos: Matriz de objetos donde se almacenará la matriz de adyacencia.
+      
+      Retorno: Ninguno
+     */
 	private void setearIdentificadores(Object[][] matrizObjetos) {
 	    
 		ArrayList<Nodo> misNodos = grafo.getMisNodos();

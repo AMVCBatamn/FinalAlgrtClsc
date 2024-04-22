@@ -165,6 +165,16 @@ public class CalculoDijkstra extends JDialog {
 		}
 		cargarDatos();
 	}
+	
+	/*
+	  Método: cargarDatos
+	  
+	  Objetivo: Carga los datos de origen y destino en los ComboBox.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 
 	private void cargarDatos() {
 		
@@ -180,6 +190,17 @@ public class CalculoDijkstra extends JDialog {
 			cbxDestino.addItem(nodo.getNombreUbicacion());
 		}
 	}
+	
+	
+	/*
+	  Método: calcularRuta
+	  
+	  Objetivo: Calcula la ruta más corta o de tiempo mínimo usando el algoritmo de Dijkstra.
+	  
+	  Argumento: Ninguno
+	  
+	  Retorno: void
+	 */
 	
 	private void calcularRuta() {
 	   
@@ -213,6 +234,18 @@ public class CalculoDijkstra extends JDialog {
 	    textArea.setText(resultado.toString());
 	}
 	
+	
+	/*
+	  Método: calcularTodaRuta
+	  
+	  Objetivo: Calcula la ruta de distancia mínima o tiempo mínimo hacia todos los nodos del grafo.
+	  
+	  Argumento: String origen: Nombre del nodo de origen.
+	             int[] distancias: Arreglo con las distancias mínimas desde el nodo origen.
+	             boolean esTiempo: Indica si se quiere calcular el tiempo mínimo (true) o la distancia mínima (false).
+	  
+	  Retorno: String con la ruta calculada.
+	 */
 	private String calcularTodaRuta(String origen, int[] distancias, boolean esTiempo) {
 	    
 		StringBuilder resultado = new StringBuilder();
@@ -232,6 +265,18 @@ public class CalculoDijkstra extends JDialog {
 	    return resultado.toString();
 	}
 
+	/*
+	  Método: calcularRutaEspecifica
+	  
+	  Objetivo: Calcula la ruta de distancia mínima o tiempo mínimo hacia un nodo destino específico.
+	  
+	  Argumento: String origen: Nombre del nodo de origen.
+	             String destino: Nombre del nodo destino.
+	             int[] distancias: Arreglo con las distancias mínimas desde el nodo origen.
+	             boolean esTiempo: Indica si se quiere calcular el tiempo mínimo (true) o la distancia mínima (false).
+	  
+	  Retorno: String con la ruta calculada.
+	 */
 	private String calcularRutaEspecifica(String origen, String destino, int[] distancias, boolean esTiempo) {
 	    
 		StringBuilder resultado = new StringBuilder();

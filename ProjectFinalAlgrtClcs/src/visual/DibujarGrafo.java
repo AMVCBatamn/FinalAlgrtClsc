@@ -73,7 +73,15 @@ public class DibujarGrafo extends JPanel {
 			}
 		});
 	}
-	
+	/*
+	  Método: getNodoAt
+	  
+	  Objetivo: Devuelve el nodo más cercano a la posición dada.
+	  
+	  Argumento: Point p: Coordenadas del punto.
+	  
+	  Retorno: Nodo: Nodo más cercano al punto dado.
+	 */
 	private Nodo getNodoAt(Point p) {
 		
 		Nodo aux = null;
@@ -104,6 +112,16 @@ public class DibujarGrafo extends JPanel {
         super.paintComponent(g);
         dibujarGrafo((Graphics2D) g);
     }
+	
+	/*
+	  Método: dibujarGrafo
+	  
+	  Objetivo: Dibuja el grafo en el panel.
+	  
+	  Argumento: Graphics2D g2d: Objeto para dibujar en el panel.
+	  
+	  Retorno: void
+	 */
 	
 	private void dibujarGrafo(Graphics2D g2d) {
 		

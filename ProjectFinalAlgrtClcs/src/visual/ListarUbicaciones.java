@@ -116,6 +116,15 @@ public class ListarUbicaciones extends JDialog {
         actualizarTabla();
     }
 
+    /*
+      Método: actualizarTabla
+      
+      Objetivo: Actualiza la tabla con las ubicaciones existentes.
+      
+      Argumento: Ninguno
+      
+      Retorno: void
+     */
     private void actualizarTabla() {
         Object[] rows;
         rows = new Object[model.getColumnCount()];

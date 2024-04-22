@@ -135,6 +135,15 @@ public class CalculoKruskal extends JDialog {
 		}
 	}
 	
+	  /**
+      Método: loadResultados
+      
+      Objetivo: Carga los resultados del algoritmo de Kruskal en el área de texto.
+      
+      Argumentos: Ninguno
+      
+      Retorno: Ninguno
+     */
 	private void loadResultados() {
 		
 		ArrayList<Arista> aristaKruskal = Grafo.getInstance().calcularKruskal(); 
@@ -151,6 +160,16 @@ public class CalculoKruskal extends JDialog {
 		Font font = new Font("Verdana", Font.PLAIN, 12);
 		textArea.setFont(font);
 	}
+	
+	  /**
+      Método: loadGrafo
+      
+      Objetivo: Carga y muestra el grafo generado por el algoritmo de Kruskal.
+      
+      Argumentos: Ninguno
+      
+      Retorno: Ninguno
+     */
 	
 	private void loadGrafo() {
 		
