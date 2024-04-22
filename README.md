@@ -1,3 +1,26 @@
+-------------------## CONTENIDO DE ESTE ARCHIVO: 
+
+*Experiencias con el proyecto
+
+*Sistema de Gestión de Rutas
+
+*Instalación
+
+*Uso
+
+*Licencia
+
+*Documentación:
+
+*Contribución
+
+*Autor
+
+*Versiones
+
+
+-------------------
+
 
 # Experiencias con el proyecto
 
