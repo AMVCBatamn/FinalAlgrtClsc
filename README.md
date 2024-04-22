@@ -1,24 +1,17 @@
-# Contenido de este Archivo:
--------------------
+# Índice:
+## Contenido de este Archivo:
+
 * Experiencias con el proyecto
-
 * Sistema de Gestión de Rutas
-
 * Instalación
-
 * Uso
-
 * Licencia
-
 * Documentación
-
 * Contribución
-
 * Autor
-
 * Versiones
--------------------
-# Experiencias con el proyecto:
+
+# Experiencias con el Proyecto:
 
 Si bien logramos implementar toda la lógica del programa y su funcionamiento fue óptimo a través de la consola, decidimos dar un paso más allá y desarrollar la interfaz gráfica de usuario simultáneamente, con el fin de brindar una experiencia más cómoda e intuitiva para el usuario.
 
