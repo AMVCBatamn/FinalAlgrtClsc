@@ -1,3 +1,4 @@
+
 # Experiencias con el proyecto
 
 Si bien logramos implementar toda la lógica del programa y su funcionamiento fue óptimo a través de la consola, decidimos dar un paso más allá y desarrollar la interfaz gráfica de usuario simultáneamente, con el fin de brindar una experiencia más cómoda e intuitiva para el usuario.
