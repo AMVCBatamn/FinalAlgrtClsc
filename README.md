@@ -53,6 +53,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Documentación:
 
+- **UML**
+  
+
+
 - **Clase: Grafo.java**
 
   **Propósito:** Esta clase maneja la estructura básica del grafo que incluye nodos y aristas. Es fundamental para 
