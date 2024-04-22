@@ -30,7 +30,7 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
-public class CalculoPrim extends JFrame {
+public class CalculoPrim extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea textArea;
@@ -143,12 +143,15 @@ public class CalculoPrim extends JFrame {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(" Árbol de Expansión Mínima vía Prim:\n\n");
-		sb.append(String.format(" %-25s | %-10s\n", "Conexión:", "Distancia:"));
-	
+		sb.append(String.format(" %-40s \t| %-15s\n", "Conexión:", "Distancia:"));
+
 		for (Arista arista : aristasPrim) {
-			sb.append(String.format(" %-25s | %-10s\n", "["+arista.getUbicacionOrigen().getNombreUbicacion() + "," + arista.getUbicacionDestino().getNombreUbicacion()+"]", arista.getPeso()));
+			String pesoArista = arista.getPeso() == Integer.MAX_VALUE ? "INF" : Integer.toString(arista.getPeso());
+			sb.append(String.format(" %-40s \t| %-15s\n", "["+arista.getUbicacionOrigen().getNombreUbicacion() + ", " + arista.getUbicacionDestino().getNombreUbicacion()+"]", pesoArista));
 		}
 		textArea.setText(sb.toString());
+		Font font = new Font("Verdana", Font.PLAIN, 12);
+		textArea.setFont(font);
 	}
 	
 	private void loadGrafo() {

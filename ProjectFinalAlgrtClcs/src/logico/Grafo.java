@@ -58,8 +58,9 @@ public class Grafo {
 		
 		System.out.println("Nodos únicos:");
         for (Nodo nodo : nodosUnicos) {
-            System.out.println(nodo.getNombreUbicacion());
+            System.out.printf("%-15s", nodo.getNombreUbicacion() + "\t");
         }
+        System.out.println();
 	}
 	
 	
@@ -149,7 +150,7 @@ public class Grafo {
 	   
 	    System.out.print("  ");
 	    for (int j = 0; j < columnas; j++) {
-	        System.out.print(j + " ");
+	        System.out.printf("%4s ", j + " ");
 	    }
 	    System.out.println();
 	    
@@ -158,7 +159,11 @@ public class Grafo {
 	    	System.out.print(i + " ");
 	        
 	        for (int j = 0; j < columnas; j++) {
-	            System.out.print(matriz[i][j] + " ");
+	        	if (matriz[i][j] == Integer.MAX_VALUE) {
+	                System.out.print("INF" + " ");
+	            } else {
+	            	System.out.printf("%4s ", matriz[i][j] + " ");
+	            }
 	        }
 	        
 	        System.out.println();
@@ -232,13 +237,13 @@ public class Grafo {
 		return index;
 	}
 	
-	public boolean existeArista(String origen, String destino, int peso) {
+	public boolean existeArista(String origen, String destino, int peso, int tiempo) {
 		
 		boolean existe = false;
 		
 		for (Arista arista : misAristas) {
-	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino)) && arista.getPeso() == peso||
-	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getPeso() == peso)) {
+	        if ((arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(destino)) && arista.getPeso() == peso && arista.getTiempo() == tiempo ||
+	            (arista.getUbicacionOrigen().getNombreUbicacion().equalsIgnoreCase(destino) &&arista.getUbicacionDestino().getNombreUbicacion().equalsIgnoreCase(origen) && arista.getPeso() == peso && arista.getTiempo() == tiempo)) {
 	            existe = true;
 	        }
 	    }
@@ -247,6 +252,17 @@ public class Grafo {
 	
 	public void actualizarArista(int index, Arista nuevoArista) {
 		misAristas.set(index, nuevoArista);
+	}
+	
+	public int obtnerNombreMasLargo(Grafo miGrafo) {
+		int maxLength = 0;
+		for (Nodo nodo : miGrafo.misNodos) {
+			int length = nodo.getNombreUbicacion().length();
+			if (length > maxLength) {
+		    	maxLength = length;
+		    }
+		}		
+		return maxLength;
 	}
 	
 	//METODOS DIJKSTRA//
@@ -293,28 +309,16 @@ public class Grafo {
 	public void imprimirResultadosDijkstra(int distancia[], String ubicacion){
 		
 		String destino = "";
-		int maxLen = 0;
-	    
-	    for (Nodo nodo : misNodos) {
-	        int len = nodo.getNombreUbicacion().length();
-	        if (len > maxLen) {
-	        	maxLen = len;
-	        }
-	    }
-	    
-	    int maxVal = Integer.MIN_VALUE;
-	    for (int i = 0; i < distancia.length; i++) {
-	        int val = distancia[i];
-	        if (val > maxVal) {
-	            maxVal = val;
-	        }
-	    }
 		
-		System.out.println("Destino: \t Distancia Mínima Desde " + ubicacion + ":"); 
+		System.out.println("Destino: \t\t\t Distancia Mínima Desde " + ubicacion + ":"); 
 		
         for (int i = 0; i < misNodos.size(); i++) {
         	destino = misNodos.get(i).getNombreUbicacion();
-        	System.out.printf("%-" + maxLen + "s \t\t %" + Math.abs(maxLen-maxVal) + "d km %n", destino, distancia[i]);
+        	if (distancia[i] == Integer.MAX_VALUE) {
+                System.out.printf("%-30s \t\t %s%n", destino, "   INF");
+            } else {
+                System.out.printf("%-30s \t\t %d km%n", destino, distancia[i]);
+            }
         }
     }
 	
@@ -364,25 +368,6 @@ public class Grafo {
         if (raiz1 != raiz2) {
             padres[raiz1] = raiz2;
         }
-	}
-	
-	public void imprimirAristasKruskal(ArrayList<Arista> aristasKruskal) {
-	    
-		int total = 0;
-		
-		System.out.println("Aristas del árbol de expansión mínima (Kruskal):");
-		
-	    for (int i = 0; i < aristasKruskal.size(); i++) {
-	        
-	    	Arista arista = aristasKruskal.get(i);
-	    	
-	        System.out.println("Ruta " + (i + 1) + ": Desde " + arista.getUbicacionOrigen().getNombreUbicacion() + " hasta " + 
-	        		arista.getUbicacionDestino().getNombreUbicacion() + ", hay una distancia de: " + arista.getPeso() + " km");
-	        
-	        total += arista.getPeso();
-	    }
-	    
-	    System.out.println("\nCosto total del árbol de expansión mínima: " + total);
 	}
 	
 	//METODOS PRIM//
@@ -437,25 +422,6 @@ public class Grafo {
 		
 		return minArista;
 	}
-
-	public void imprimirAristasPrim(ArrayList<Arista> aristasPrim) {
-	    
-		int total = 0;
-		
-		System.out.println("Aristas del árbol de expansión mínima (Prim):");
-		
-	    for (int i = 0; i < aristasPrim.size(); i++) {
-	        
-	    	Arista arista = aristasPrim.get(i);
-	    	
-	        System.out.println("Ruta " + (i + 1) + ": Desde " + arista.getUbicacionOrigen().getNombreUbicacion() + " hasta " + 
-	        		arista.getUbicacionDestino().getNombreUbicacion() + ", hay una distancia de: " + arista.getPeso() + " km");
-	        
-	        total += arista.getPeso();
-	    }
-	    
-	    System.out.println("\nCosto total del árbol de expansión mínima: " + total);
-	}
 	
 	//METODOS FLOYD WARSHALL//
 	
@@ -491,26 +457,66 @@ public class Grafo {
 	}
 	
 	public void imprimirAristas(ArrayList<Arista> aristas, boolean mostrarPeso, boolean mostrarTotal, String algoritmo) {
-	    int total = 0;
+	    
+		int total = 0;
 	    System.out.println("Aristas " + algoritmo + ":");
-	    System.out.printf("%-8s %-16s %-16s %s%n", "Ruta", "Origen", "Destino", mostrarPeso ? "Peso" : "");
+	    System.out.printf("%-30s %-30s %-30s %s%n", "Ruta", "Origen", "Destino", mostrarPeso ? "Peso" : "");
 
 	    for (int i = 0; i < aristas.size(); i++) {
 	        Arista arista = aristas.get(i);
 	        String ruta = String.valueOf(i + 1);
 	        String origen = arista.getUbicacionOrigen().getNombreUbicacion();
 	        String destino = arista.getUbicacionDestino().getNombreUbicacion();
-	        String peso = mostrarPeso ? String.valueOf(arista.getPeso()) : "";
+	        String peso = arista.getPeso() == Integer.MAX_VALUE ? "INF" : String.valueOf(arista.getPeso());
 
-	        System.out.printf("%-8s %-16s %-16s %s%n", ruta, origen, destino, peso);
+	        System.out.printf("%-30s %-30s %-30s %s%n", ruta, origen, destino, peso);
 
-	        if (mostrarPeso) {
+	        if (mostrarPeso && arista.getPeso() != Integer.MAX_VALUE) {
 	            total += arista.getPeso();
 	        }
 	    }
 
 	    if (mostrarTotal && mostrarPeso) {
-	        System.out.println("Costo Total: " + total);
+	        System.out.println("Costo Total: " + (total == Integer.MAX_VALUE ? "INF" : total));
 	    }
 	}
+	
+	//METODOS PLANIFICACION DE RUTA//
+	
+	public int [][] generarMatrizAdyacenciaTiempo(){
+		
+		int numN = misNodos.size();
+	    int[][] matrizAdyacencia = new int[numN][numN];
+
+	    for (int i = 0; i < numN; i++) {
+	        for (int j = 0; j < numN; j++) {
+	            matrizAdyacencia[i][j] = 0; //No conectado en tal caso.
+	        }
+	    }
+
+	    for (Arista arista : misAristas) {
+	    	
+	    	int origen = misNodos.indexOf(arista.getUbicacionOrigen());
+	    	int destino = misNodos.indexOf(arista.getUbicacionDestino());
+	        matrizAdyacencia[destino][origen] = matrizAdyacencia[origen][destino] = arista.getTiempo();
+	    }
+
+	    return matrizAdyacencia;
+	}
+	
+	public void imprimirResultadosDijkstraTiempo(int distancia[], String ubicacion){
+		
+		String destino = "";
+		
+		System.out.println("Destino: \t\t\t Tiempo Mínimo Desde " + ubicacion + ":"); 
+		
+        for (int i = 0; i < misNodos.size(); i++) {
+        	destino = misNodos.get(i).getNombreUbicacion();
+        	if (distancia[i] == Integer.MAX_VALUE) {
+                System.out.printf("%-30s \t\t %s%n", destino, "   INF");
+            } else {
+                System.out.printf("%-30s \t\t %d min%n", destino, distancia[i]);
+            }
+        }
+    }
 }

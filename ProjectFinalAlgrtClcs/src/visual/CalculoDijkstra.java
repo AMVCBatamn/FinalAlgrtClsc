@@ -35,13 +35,15 @@ public class CalculoDijkstra extends JDialog {
 	private Grafo grafo;
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
+	private boolean esTiempo = false;
+	private int [][] matrizAdyacencia;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			CalculoDijkstra dialog = new CalculoDijkstra();
+			CalculoDijkstra dialog = new CalculoDijkstra(false);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -52,9 +54,16 @@ public class CalculoDijkstra extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CalculoDijkstra() {
+	public CalculoDijkstra(boolean esTiempo) {
+		
+		this.esTiempo = esTiempo;
+		
+		if (!esTiempo) {
+			setTitle("Cálculo Dijkstra: Distancia");
+		} else {
+			setTitle("Cálculo Dijkstra: Tiempo");
+		}
 		setResizable(false);
-		setTitle("Cálculo Dijkstra");
 		setBounds(100, 100, 625, 380);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -136,52 +145,7 @@ public class CalculoDijkstra extends JDialog {
 				JButton okButton = new JButton("Calcular");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					
-						String origen = (String) cbxOrigen.getSelectedItem();
-						String destino = (String) cbxDestino.getSelectedItem();
-						
-						if (origen.equals("<Seleccione>") || (rdbtnEspcf.isSelected() && destino.equals("<Seleccione>"))) {
-							JOptionPane.showMessageDialog(null, "Por favor, ingrese una opción válida", "Error", JOptionPane.ERROR_MESSAGE);
-				            return;
-				        }
-						
-						int [][] matrizAdyacencia = Grafo.getInstance().generarMatrizAdyacencia();
-						int index = Grafo.getInstance().buscarIndexByNombre(origen);
-						int [] distancias = Grafo.getInstance().calcularDijkstra(matrizAdyacencia,index);
-						
-						StringBuilder resultado = new StringBuilder();
-						
-						if (rdbtnTodas.isSelected()) {
-							
-							resultado.append(" Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
-							
-							for (int i = 0; i < distancias.length; i++) {
-								String nodoDestino = Grafo.getInstance().getMisNodos().get(i).getNombreUbicacion();
-								if (distancias[i] == Integer.MAX_VALUE) {
-									resultado.append(String.format(" %-15s\t%3s\n", nodoDestino, "  INF"));
-								} else {
-									resultado.append(String.format(" %-15s\t%3d km\n", nodoDestino, distancias[i]));
-								}
-							}
-							
-						} else if(rdbtnEspcf.isSelected() && destino != null){
-							
-							resultado.append(" Destino: \tDistancia Mínima Desde ").append(origen).append(":\n\n");
-							
-							int destinoIndex = Grafo.getInstance().buscarIndexByNombre(destino);
-							
-			                if (destinoIndex != -1) {
-			                	if (distancias[destinoIndex] == Integer.MAX_VALUE) {
-			                		resultado.append(String.format(" %-15s\t%3s\n", destino, "   INF"));
-			                	} else {
-			                		resultado.append(String.format(" %-15s\t%3d km\n", destino, distancias[destinoIndex]));
-			                	}
-			                }
-							
-						} else {
-							resultado.append(" Destino no válido");
-						}
-						textArea.setText(resultado.toString());
+						calcularRuta();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -215,5 +179,75 @@ public class CalculoDijkstra extends JDialog {
 			cbxOrigen.addItem(nodo.getNombreUbicacion());
 			cbxDestino.addItem(nodo.getNombreUbicacion());
 		}
+	}
+	
+	private void calcularRuta() {
+	   
+		String origen = (String) cbxOrigen.getSelectedItem();
+	    String destino = (String) cbxDestino.getSelectedItem();
+
+	    if (origen.equals("<Seleccione>") || (rdbtnEspcf.isSelected() && destino.equals("<Seleccione>"))) {
+	        JOptionPane.showMessageDialog(null, "Por favor, ingrese una opción válida", "Error", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    if (esTiempo) {	
+	    	matrizAdyacencia = Grafo.getInstance().generarMatrizAdyacenciaTiempo();
+	    } else {
+	    	matrizAdyacencia = Grafo.getInstance().generarMatrizAdyacencia();
+	    }
+
+	    int indexOrigen = Grafo.getInstance().buscarIndexByNombre(origen);
+	    int[] distancias = Grafo.getInstance().calcularDijkstra(matrizAdyacencia, indexOrigen);
+
+	    StringBuilder resultado = new StringBuilder();
+
+	    if (rdbtnTodas.isSelected()) {
+	        resultado.append(calcularTodaRuta(origen, distancias, esTiempo));
+	    } else if (rdbtnEspcf.isSelected() && !destino.equals("<Seleccione>")) {
+	        resultado.append(calcularRutaEspecifica(origen, destino, distancias, esTiempo));
+	    } else {
+	        resultado.append(" Destino no válido");
+	    }
+	    
+	    textArea.setText(resultado.toString());
+	}
+	
+	private String calcularTodaRuta(String origen, int[] distancias, boolean esTiempo) {
+	    
+		StringBuilder resultado = new StringBuilder();
+		String medida = esTiempo ? "Tiempo Mínimo" : "Distancia Mínima";
+		resultado.append(String.format(" Destino: \t%s Desde %s:\n\n", medida, origen));
+
+	    for (int i = 0; i < distancias.length; i++) {
+	        String nodoDestino = Grafo.getInstance().getMisNodos().get(i).getNombreUbicacion();
+	        if (distancias[i] == Integer.MAX_VALUE) {
+	            resultado.append(String.format(" %-15s\t%3s\n", nodoDestino, "  INF"));
+	        } else {
+	        	String unidad = esTiempo ? "mins" : "km";
+	        	resultado.append(String.format(" %-15s\t%3d %s\n", nodoDestino, distancias[i], unidad));
+	        }
+	    }
+	    
+	    return resultado.toString();
+	}
+
+	private String calcularRutaEspecifica(String origen, String destino, int[] distancias, boolean esTiempo) {
+	    
+		StringBuilder resultado = new StringBuilder();
+		String medida = esTiempo ? "Tiempo Mínimo" : "Distancia Mínima";
+		resultado.append(String.format(" Destino: \t%s Desde %s:\n\n", medida, origen));
+	    int destinoIndex = Grafo.getInstance().buscarIndexByNombre(destino);
+
+	    if (destinoIndex != -1) {
+	        if (distancias[destinoIndex] == Integer.MAX_VALUE) {
+	            resultado.append(String.format(" %-15s\t%3s\n", destino, "   INF"));
+	        } else {
+	        	String unidad = esTiempo ? "mins" : "km";
+                resultado.append(String.format(" %-15s\t%3d %s\n", destino, distancias[destinoIndex],unidad));
+	        }
+	    }
+	    
+	    return resultado.toString();
 	}
 }

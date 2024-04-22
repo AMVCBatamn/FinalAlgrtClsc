@@ -124,6 +124,9 @@ public class DibujarGrafo extends JPanel {
             
             if (verPeso) {
             	valor = String.valueOf(arista.getPeso()); 
+            	if (arista.getPeso() == Integer.MAX_VALUE) {
+            		valor = "INF";
+            	}
             } else {
             	valor = String.valueOf(arista.getTiempo());
             }

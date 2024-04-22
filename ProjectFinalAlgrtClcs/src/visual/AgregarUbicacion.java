@@ -150,7 +150,6 @@ public class AgregarUbicacion extends JDialog {
                             spnLatitud.setValue(0.0);
                             Grafo.getInstance().insertarNodo(nuevoNodo);
                             JOptionPane.showMessageDialog(null, "Ubicación agregada correctamente.");
-                            dispose();
                         }
             	    }
             	});

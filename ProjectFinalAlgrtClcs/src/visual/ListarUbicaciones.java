@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
 
 public class ListarUbicaciones extends JDialog {
 
@@ -24,10 +25,11 @@ public class ListarUbicaciones extends JDialog {
      * Create the dialog.
      */
     public ListarUbicaciones() {
+    	grafo = Grafo.getInstance();
         setTitle("Lista de Ubicaciones");
         setBounds(100, 100, 575, 488);
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
 
@@ -39,9 +41,12 @@ public class ListarUbicaciones extends JDialog {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
+        Font font = new Font("Verdana", Font.BOLD, 11);
+        table.setFont(font);
+        table.getTableHeader().setFont(font);
 
         JPanel buttonPane = new JPanel();
-        buttonPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
         
@@ -65,7 +70,6 @@ public class ListarUbicaciones extends JDialog {
                         modificarNodo.setModal(true); 
                         modificarNodo.setVisible(true);
                         actualizarTabla();
-
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor, seleccione una ubicación para modificar.", "Modificar Ubicación", JOptionPane.WARNING_MESSAGE);
@@ -107,35 +111,28 @@ public class ListarUbicaciones extends JDialog {
         cancelButton.addActionListener(e -> dispose());
         buttonPane.add(cancelButton);
 
- 
-        
-
-
         setLocationRelativeTo(null);
         setResizable(false);
-    }
-
-    public void setGrafo(Grafo grafo) {
-        this.grafo = grafo;
         actualizarTabla();
     }
 
     private void actualizarTabla() {
-        if (grafo != null && model != null) {
-            model.setRowCount(0);
+        Object[] rows;
+        rows = new Object[model.getColumnCount()];
+        model.setRowCount(0);
 
+        if (grafo != null) {
             ArrayList<Nodo> nodos = grafo.getMisNodos();
-
             for (Nodo nodo : nodos) {
-                Object[] rowData = {
-                		"Ubic-"+nodo.getCodigo(),
-                        nodo.getValor(),
-                        nodo.getNombreUbicacion(),
-                        nodo.getLonguitud(),
-                        nodo.getLatitud()
-                };
-                model.addRow(rowData);
+                rows[0] = "Ubic-" + nodo.getCodigo();
+                rows[1] = nodo.getValor();
+                rows[2] = nodo.getNombreUbicacion();
+                rows[3] = nodo.getLonguitud();
+                rows[4] = nodo.getLatitud();
+                model.addRow(rows);
             }
         }
+        
+        table.clearSelection();
     }
 }

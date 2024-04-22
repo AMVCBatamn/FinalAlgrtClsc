@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -71,6 +72,9 @@ public class ListarConexion extends JDialog {
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					scrollPane.setViewportView(table);
 					table.setModel(model);
+					Font font = new Font("Verdana", Font.BOLD, 11);
+			        table.setFont(font);
+			        table.getTableHeader().setFont(font);
 				}
 			}
 		}
