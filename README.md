@@ -43,8 +43,34 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## Documentación:
 
 - Clase: Grafo.java
+
+ Propósito: Esta clase maneja la estructura básica del grafo que incluye nodos y aristas. Es fundamental para 
+ representar las conexiones entre las diferentes ubicaciones en el sistema de gestión de rutas.
+ 
+Funcionalidades Principales:
+
+Agregar y eliminar nodos.
+Agregar y eliminar aristas.
+Obtener información sobre rutas y conexiones.
+Algoritmos para la búsqueda de rutas mínimas, como Dijkstra y Floyd-Warshall.
+
 - Clase: Nodo.java
+
+Propósito: Representa cada ubicación dentro del sistema de gestión de rutas. Cada nodo es un punto individual en el grafo.
+Funcionalidades Principales:
+
+Mantener información específica de la ubicación.
+Mantener una lista de aristas que conectan el nodo con otros nodos, representando posibles rutas.
+
 - Clase: Arista.java
+
+ Propósito: Representa la conexión entre dos nodos. Esta clase es crucial para definir el peso de las
+ conexiones, que puede ser interpretado como distancia o tiempo entre puntos, dependiendo de las necesidades del sistema.
+ 
+Funcionalidades Principales:
+
+Conecta dos nodos en el grafo.
+Almacenar información sobre el costo o peso de la conexión, que se usa en los cálculos de las rutas más cortas.
 
 
 Aquí se puede probar el funcionamiento del proyecto de manera lógica:
