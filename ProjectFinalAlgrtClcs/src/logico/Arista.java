@@ -18,10 +18,31 @@ public class Arista {
 		this.tiempo = tiempo;
 	}
 	
+	   /**
+      Método: getCodigo
+      
+      Objetivo: Retorna el código de la arista.
+      
+      Argumentos: Ninguno
+      
+      Retorno:
+        int: Código de la arista.
+     */
+	
 	public int getCodigo() {
 		return codigo;
 	}
 	
+	  /**
+      Método: setCodigo
+      
+      Objetivo: Establece el código de la arista.
+      
+      Argumentos:
+       - codigo: Código de la arista.
+      
+      Retorno: Ninguno
+     */
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
@@ -29,6 +50,8 @@ public class Arista {
 	public Nodo getUbicacionOrigen() {
 		return ubicacionOrigen;
 	}
+	
+	//....
 	
 	public void setUbicacionOrigen(Nodo ubicacionOrigen) {
 		this.ubicacionOrigen = ubicacionOrigen;
