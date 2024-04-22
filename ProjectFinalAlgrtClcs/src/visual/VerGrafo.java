@@ -46,6 +46,12 @@ public class VerGrafo extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	
+	/**
+	  Constructor: VerGrafo
+	  
+	  Objetivo: Inicializa la ventana de visualización del grafo.
+	 */
 	public VerGrafo() {
 		setResizable(false);
 		setTitle("Ver Grafo");
